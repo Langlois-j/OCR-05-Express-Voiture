@@ -2,8 +2,12 @@
 {
     public class CarMaker
     {
+        public CarMaker(string name) { 
+            Id= Guid.NewGuid();
+            Name = name;
+        }
         public Guid Id {get ;set;}
-        public required string Name { get; set; }
+        public string Name { get; set; }
 
     }
 }
