@@ -5,7 +5,7 @@
         public Guid Id { get; set; }
         public string Name { get; set; }
 
-        public CarMaker CarMaker { get; set; }  
+        public CarBrand CarBrand { get; set; }  
 
     }
 }

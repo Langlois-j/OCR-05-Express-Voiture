@@ -1,8 +1,8 @@
 ﻿namespace OCR_05_Express_Voiture.Models.Entities
 {
-    public class CarMaker
+    public class CarBrand
     {
-        public CarMaker(string name) { 
+        public CarBrand(string name) { 
             Id= Guid.NewGuid();
             Name = name;
         }
