@@ -4,8 +4,8 @@
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-
-        public CarBrand CarBrand { get; set; }  
+        public Guid BrandId { get; set; }
+        public virtual CarBrand? CarBrand { get; set; }  
 
     }
 }

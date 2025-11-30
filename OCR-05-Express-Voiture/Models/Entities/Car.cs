@@ -20,7 +20,7 @@
 
         public double RepearAmount { get; set; }
 
-        public virtual ICollection<Repear> Repears { get; set; }
+        public virtual ICollection<RepearType> Repears { get; set; }
 
         public virtual PurchaseSale Purchase { get; set; }
 

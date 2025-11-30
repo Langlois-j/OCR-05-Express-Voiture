@@ -5,7 +5,7 @@ using OCR_05_Express_Voiture.Models.Entities;
 using Xunit;
 namespace OCR_05_Express_Voiture_Test
 {
-    public class CarBrandRepositoryTest 
+    public class CarModelRepositoryTest 
     {
         private Boolean _TestPasTout = false;
         private static DbContext CreateInMemoryContext()
@@ -26,7 +26,7 @@ namespace OCR_05_Express_Voiture_Test
             // Arrange
             var context = CreateInMemoryContext();
             // Seed data for testing
-            var repository = new CarBrandRepository(context);
+            var repository = new CarModelRepository(context);
 
             // Act
             var result = await repository.GetAllAsync();

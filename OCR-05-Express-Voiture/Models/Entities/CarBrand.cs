@@ -2,7 +2,8 @@
 {
     public class CarBrand
     {
-        public CarBrand(string name) { 
+        public CarBrand(string name) 
+        { 
             Id= Guid.NewGuid();
             Name = name;
         }
