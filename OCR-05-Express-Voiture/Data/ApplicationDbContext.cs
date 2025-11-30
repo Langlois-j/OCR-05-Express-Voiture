@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using OCR_05_Express_Voiture.Models.Entities;
 using System;
 using System.Reflection.Emit;
+
 namespace OCR_05_Express_Voiture.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -16,56 +18,37 @@ namespace OCR_05_Express_Voiture.Data
         public DbSet<CarBrand> CarBrands { get; set; } = null!;
         public DbSet<CarModel> CarModels { get; set; } = null!;
 
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            // GUID fixes pour les marques
-            var renaultId    = Guid.Parse("21c9b0b6-1a2d-4f61-8fcb-000000000001");
-            var mazdaId      = Guid.Parse("21c9b0b6-1a2d-4f61-8fcb-000000000002");
-            var jeepId       = Guid.Parse("21c9b0b6-1a2d-4f61-8fcb-000000000003");
-            var fordId       = Guid.Parse("21c9b0b6-1a2d-4f61-8fcb-000000000004");
-            var hondaId      = Guid.Parse("21c9b0b6-1a2d-4f61-8fcb-000000000005");
-            var volkswagenId = Guid.Parse("21c9b0b6-1a2d-4f61-8fcb-000000000006");
-
-            // GUID fixes pour les modèles
-            var miataId     = Guid.Parse("31c9b0b6-1a2d-4f61-8fcm-000000000001");
-            var cx5Id       = Guid.Parse("31c9b0b6-1a2d-4f61-8fcm-000000000002");
-            var wranglerId  = Guid.Parse("31c9b0b6-1a2d-4f61-8fcm-000000000003");
-            var cherokeeId  = Guid.Parse("31c9b0b6-1a2d-4f61-8fcm-000000000004");
-            var mustangId   = Guid.Parse("31c9b0b6-1a2d-4f61-8fcm-000000000005");
-            var f150Id      = Guid.Parse("31c9b0b6-1a2d-4f61-8fcm-000000000006");
-            var civicId     = Guid.Parse("31c9b0b6-1a2d-4f61-8fcm-000000000007");
-            var accordId    = Guid.Parse("31c9b0b6-1a2d-4f61-8fcm-000000000008");
-            var clioId      = Guid.Parse("31c9b0b6-1a2d-4f61-8fcm-000000000009");
-            var meganeId    = Guid.Parse("31c9b0b6-1a2d-4f61-8fcm-000000000010");
-            var golfId      = Guid.Parse("31c9b0b6-1a2d-4f61-8fcm-000000000011");
-            var passatId    = Guid.Parse("31c9b0b6-1a2d-4f61-8fcm-000000000012");
+            var passatId = Guid.Parse("31c9b0b6-1a2d-4f61-8fcb-000000000062");
 
             // Seed des marques
             builder.Entity<CarBrand>().HasData(
-                new { Id = renaultId,    Name = "Renault" },
-                new { Id = mazdaId,      Name = "Mazda" },
-                new { Id = jeepId,       Name = "Jeep" },
-                new { Id = fordId,       Name = "Ford" },
-                new { Id = hondaId,      Name = "Honda" },
-                new { Id = volkswagenId, Name = "Volkswagen" }
+                new { Id = SeedData.Brands.Renault, Name = "Renault" },
+                new { Id = SeedData.Brands.Mazda, Name = "Mazda" },
+                new { Id = SeedData.Brands.Jeep, Name = "Jeep" },
+                new { Id = SeedData.Brands.Ford, Name = "Ford" },
+                new { Id = SeedData.Brands.Honda, Name = "Honda" },
+                new { Id = SeedData.Brands.Volkswagen, Name = "Volkswagen" }
             );
 
             // Seed des modèles
             builder.Entity<CarModel>().HasData(
-                new { Id = miataId, Name = "Miata", BrandId = mazdaId },
-                new { Id = cx5Id, Name = "CX-5", BrandId = mazdaId },
-                new { Id = wranglerId, Name = "Wrangler", BrandId = jeepId },
-                new { Id = cherokeeId, Name = "Cherokee", BrandId = jeepId },
-                new { Id = mustangId, Name = "Mustang", BrandId = fordId },
-                new { Id = f150Id, Name = "F-150", BrandId = fordId },
-                new { Id = civicId, Name = "Civic", BrandId = hondaId },
-                new { Id = accordId, Name = "Accord", BrandId = hondaId },
-                new { Id = clioId, Name = "Clio", BrandId = renaultId },
-                new { Id = meganeId, Name = "Megane", BrandId = renaultId },
-                new { Id = golfId, Name = "Golf", BrandId = volkswagenId },
-                new { Id = passatId, Name = "Passat", BrandId = volkswagenId }
+                new { Id = SeedData.Models.Miata, Name = "Miata", BrandId = SeedData.Brands.Mazda },
+                new { Id = SeedData.Models.Cx5, Name = "CX-5", BrandId = SeedData.Brands.Mazda },
+                new { Id = SeedData.Models.Wrangler, Name = "Wrangler", BrandId = SeedData.Brands.Jeep },
+                new { Id = SeedData.Models.Cherokee, Name = "Cherokee", BrandId = SeedData.Brands.Jeep },
+                new { Id = SeedData.Models.Mustang, Name = "Mustang", BrandId = SeedData.Brands.Ford },
+                new { Id = SeedData.Models.F150, Name = "F-150", BrandId = SeedData.Brands.Ford },
+                new { Id = SeedData.Models.Civic, Name = "Civic", BrandId = SeedData.Brands.Honda },
+                new { Id = SeedData.Models.Accord, Name = "Accord", BrandId = SeedData.Brands.Honda },
+                new { Id = SeedData.Models.Clio, Name = "Clio", BrandId = SeedData.Brands.Renault },
+                new { Id = SeedData.Models.Megane, Name = "Megane", BrandId = SeedData.Brands.Renault },
+                new { Id = SeedData.Models.Golf, Name = "Golf", BrandId = SeedData.Brands.Volkswagen },
+                new { Id = SeedData.Models.Passat, Name = "Passat", BrandId = SeedData.Brands.Volkswagen }
             );
         }
     }

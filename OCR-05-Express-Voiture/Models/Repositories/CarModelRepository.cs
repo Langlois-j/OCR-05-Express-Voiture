@@ -5,7 +5,6 @@ namespace OCR_05_Express_Voiture.Models.Repositories
 {
     public class CarModelRepository : GenericRepository<CarModel>, ICarModelRepository
     {
-        private static List<CarModel> _carmodel;
         protected readonly DbSet<CarModel> _dbSet;
 
         public CarModelRepository(DbContext context) : base(context)
@@ -18,5 +17,12 @@ namespace OCR_05_Express_Voiture.Models.Repositories
             return await _dbSet.FirstOrDefaultAsync(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
 
+        public async Task<CarModel[]> GetAllByBrandAsync(Guid carBrandId)
+        {
+            return await _dbSet
+                .Where(cm => cm.BrandId == carBrandId)
+                .OrderBy(cm => cm.Name)
+                .ToArrayAsync();
+        }
     }
 }

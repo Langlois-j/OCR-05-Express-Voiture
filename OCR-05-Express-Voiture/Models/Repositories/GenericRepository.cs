@@ -49,42 +49,5 @@ namespace OCR_05_Express_Voiture.Models.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-        //Synchronous CRUD operations
-        public virtual T[] GetAll()
-        {
-            return _dbSet.ToArray();
-        }
-        public virtual T? GetById(Guid Id)
-        {
-            return _dbSet.Find(Id);
-        }
-        // Méthode fournie par défaut ; les dépôts spécifiques peuvent override si nécessaire.
-        public virtual T? GetByName(string name)
-        {
-            throw new NotImplementedException("GetByNameAsync must be overridden in concrete repository when needed.");
-        }
-        public virtual T Add(T entity)
-        {
-            _dbSet.Add(entity);
-            _context.SaveChanges();
-            return entity;
-        }
-        public virtual T Update(T entity)
-        {
-            _dbSet.Update(entity);
-            _context.SaveChanges();
-            return entity;
-        }
-        public virtual Boolean? Delete(Guid id)
-        {
-            var entity =  GetById(id);
-            if (entity is not null)
-            {
-                _dbSet.Remove(entity);
-                _context.SaveChanges();
-               return true;
-            }
-            return false;
-        }
     }
 }

@@ -19,9 +19,9 @@ namespace OCR_05_Express_Voiture_Test
         }
 
 
-        // Méthodes CRUD asynchrones 
+      
         [Fact]
-        public async Task GetAllArrayAsync()
+        public async Task GetAllAsync()
         {
             // Arrange
             var context = CreateInMemoryContext();
@@ -39,6 +39,17 @@ namespace OCR_05_Express_Voiture_Test
          [Fact]
         public async Task GetByIdAsync()
         {
+            // Arrange
+            var context = CreateInMemoryContext();
+            // Seed data for testing
+            var repository = new CarModelRepository(context);
+
+            // Act
+            var result = await repository.GetAllAsync(meganeId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
             Assert.Equal(false, true);
         }
         [Fact]
@@ -51,35 +62,8 @@ namespace OCR_05_Express_Voiture_Test
         public async Task UpdateAsync() { Assert.Equal(false, true); }
         [Fact]
         public async Task DeleteAsync() { Assert.Equal(false, true); }
-
-
-
-        //Synchronous CRUD operations
         [Fact]
-        public void GetAll()
-        {
-            // Arrange
-            var context = CreateInMemoryContext();
-            // Seed data for testing
-            var repository = new CarBrandRepository(context);
-
-            // Act
-            var result = repository.GetAll();
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.NotEmpty(result);
-        }
-        [Fact]
-        public void GetById() { Assert.Equal(false, true); }
-        [Fact]
-        public void GetByName() { Assert.Equal(false, true); }
-        [Fact]
-        public void Add() { Assert.Equal(false, true); }
-        [Fact]
-        public void Update() { Assert.Equal(false, true); }
-        [Fact]
-        public void Delete() { Assert.Equal(false, true); }
+        public async Task GetAllByBrandAsync() { Assert.Equal(false, true); }
 
     }
   

@@ -4,27 +4,23 @@
     {
         public Guid Id { get; set; }
 
-        public string? VimCode { get; set; }
+        public required string VinCode { get; set; }
 
-        public required CarModel Model { get; set; }
+        public Guid ModelId { get; set; }
+        public virtual CarModel Model { get; set; } = null!;
 
-        public string? Appearance { get; set; }
+        public string? TrimLevel { get; set; }
 
         public int ConstructionYear { get; set; }
 
-        public Guid PurchaseId { get; set; }
+        public Guid? PurchaseId { get; set; }
+        public virtual PurchaseSale? Purchase { get; set; }
 
-        public Guid SaleId { get; set; }
+        public Guid? SaleId { get; set; }
+        public virtual PurchaseSale? Sale { get; set; }
 
-        public DateOnly? SellingDate { get; set; }
+        public double RepairAmount { get; set; }
 
-        public double RepearAmount { get; set; }
-
-        public virtual ICollection<RepearType> Repears { get; set; }
-
-        public virtual PurchaseSale Purchase { get; set; }
-
-        public virtual PurchaseSale Sale { get; set; }
 
 
     }
