@@ -5,54 +5,30 @@ using OCR_05_Express_Voiture.Models.Entities;
 using Xunit;
 namespace OCR_05_Express_Voiture_Test
 {
-    public class CarBrandRepositoryTest
+    public class CarBrandRepositoryTest : GenericRepositoryTest<CarBrand, ICarBrandRepository>
     {
-        private Boolean _TestPasTout = false;
-        private static DbContext CreateInMemoryContext()
+        protected override ICarBrandRepository CreateRepositoryTest(ApplicationDbContext context)
         {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-                            .Options;
-            var context = new ApplicationDbContext(options);
-            context.Database.EnsureCreated();
-            return context;
+            return new CarBrandRepository(context);
         }
-
-
- 
-        [Fact]
-        public async Task GetAllAsync()
+        protected override ICarBrandRepository InsertEntityTest(ApplicationDbContext context)
         {
-            // Arrange
-            var context = CreateInMemoryContext();
-            // Seed data for testing
-            var repository = new CarBrandRepository(context);
-
-            // Act
-            var result = await repository.GetAllAsync();
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.NotEmpty(result);
+            var repository = CreateRepositoryTest(context);
+            var brand = new CarBrand("TestBrand");
+            //context.Add(brand);
+            context.CarBrand.Add(brand);
+            context.SaveChangesAsync().Wait();
+            return repository;
         }
-
-        [Fact]
-        public async Task GetByIdAsync()
+        protected override ICarBrandRepository CreateValideEntityTest()
         {
-            Assert.Equal(false, true);
+            return new CarBrand()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Test Brand"
+            };
         }
-        [Fact]
-        public async Task GetByNameAsync() { Assert.Equal(false, true); }
-
-        [Fact]
-        public async Task AddAsync() { Assert.Equal(false, true); }
-
-        [Fact]
-        public async Task UpdateAsync() { Assert.Equal(false, true); }
-        [Fact]
-        public async Task DeleteAsync() { Assert.Equal(false, true); }
-
+        protected override Guid GetEntityTestId(TEntity entity);
     }
 
   
-}

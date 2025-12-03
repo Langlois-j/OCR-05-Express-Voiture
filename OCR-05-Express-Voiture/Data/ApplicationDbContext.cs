@@ -6,7 +6,7 @@ using System.Reflection.Emit;
 
 namespace OCR_05_Express_Voiture.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : DbContext
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -15,9 +15,9 @@ namespace OCR_05_Express_Voiture.Data
         }
 
         // DbSet pour les classes
-        public DbSet<CarBrand> CarBrands { get; set; } = null!;
-        public DbSet<CarModel> CarModels { get; set; } = null!;
-        public DbSet<RepairType> RepairTypes { get; set; } = null!;
+        public DbSet<CarBrand> CarBrand { get; set; } = null!;
+        public DbSet<CarModel> CarModel { get; set; } = null!;
+        public DbSet<RepairType> RepairType { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder builder)
