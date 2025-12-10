@@ -2,22 +2,24 @@
 {
     public class Car
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public required string VinCode { get; set; }
 
-        public Guid ModelId { get; set; }
+        public int BrandId { get; set; }
+        public virtual CarBrand Brand { get; set; } = null!;
+
+        public int ModelId { get; set; }
         public virtual CarModel Model { get; set; } = null!;
 
         public string? TrimLevel { get; set; }
 
         public int ConstructionYear { get; set; }
 
-        public Guid? PurchaseId { get; set; }
-        public virtual PurchaseSale? Purchase { get; set; }
+        public int Mileage { get; set; }
 
-        public Guid? SaleId { get; set; }
-        public virtual PurchaseSale? Sale { get; set; }
+        public Boolean ForSell { get; set; }
+        public Boolean Sold { get; set; }
 
         public double RepairAmount { get; set; }
 

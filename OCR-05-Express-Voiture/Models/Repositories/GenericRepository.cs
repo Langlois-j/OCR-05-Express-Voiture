@@ -1,16 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OCR_05_Express_Voiture.Data;
 using OCR_05_Express_Voiture.Models.Entities;
 using System;
 using System.Collections.Generic;
 
 namespace OCR_05_Express_Voiture.Models.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> //: IGenericRepository<T> where T : class
     {
         protected readonly DbContext _context;
         protected readonly DbSet<T> _dbSet;
 
-        public GenericRepository(DbContext context)
+        public GenericRepository(ApplicationDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _dbSet = _context.Set<T>();
@@ -25,11 +26,7 @@ namespace OCR_05_Express_Voiture.Models.Repositories
         {
             return await _dbSet.FindAsync(id);
         }
-        // Méthode fournie par défaut ; les dépôts spécifiques peuvent override si nécessaire.
-        public virtual Task<T?> GetByNameAsync(string name)
-        {
-            throw new NotImplementedException("GetByNameAsync must be overridden in concrete repository when needed.");
-        }
+   
         public virtual async Task AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);

@@ -4,9 +4,10 @@ using OCR_05_Express_Voiture.Models.Entities;
 using System;
 using System.Reflection.Emit;
 
+
 namespace OCR_05_Express_Voiture.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -18,7 +19,8 @@ namespace OCR_05_Express_Voiture.Data
         public DbSet<CarBrand> CarBrand { get; set; } = null!;
         public DbSet<CarModel> CarModel { get; set; } = null!;
         public DbSet<RepairType> RepairType { get; set; } = null!;
-
+        public DbSet<Car> Car { get; set; } = null!;
+        public DbSet<Repair> Repair { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
