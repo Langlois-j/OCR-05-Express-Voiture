@@ -20,51 +20,49 @@ namespace OCR_05_Express_Voiture.Data
         public DbSet<CarModel> CarModel { get; set; } = null!;
         public DbSet<RepairType> RepairType { get; set; } = null!;
         public DbSet<Car> Car { get; set; } = null!;
-        public DbSet<Repair> Repair { get; set; } = null!;
+        public DbSet<CarRepair> CarRepair { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            var passatId = Guid.Parse("31c9b0b6-1a2d-4f61-8fcb-000000000062");
-
             // Seed des marques
             builder.Entity<CarBrand>().HasData(
-                new { Id = SeedData.Brands.Renault, Name = "Renault" },
-                new { Id = SeedData.Brands.Mazda, Name = "Mazda" },
-                new { Id = SeedData.Brands.Jeep, Name = "Jeep" },
-                new { Id = SeedData.Brands.Ford, Name = "Ford" },
-                new { Id = SeedData.Brands.Honda, Name = "Honda" },
-                new { Id = SeedData.Brands.Volkswagen, Name = "Volkswagen" }
+                new { Id = SeedData.SeedBrands.Renault, Name = "Renault" },
+                new { Id = SeedData.SeedBrands.Mazda, Name = "Mazda" },
+                new { Id = SeedData.SeedBrands.Jeep, Name = "Jeep" },
+                new { Id = SeedData.SeedBrands.Ford, Name = "Ford" },
+                new { Id = SeedData.SeedBrands.Honda, Name = "Honda" },
+                new { Id = SeedData.SeedBrands.Volkswagen, Name = "Volkswagen" }
             );
 
             // Seed des modèles
             builder.Entity<CarModel>().HasData(
-                new { Id = SeedData.Models.Miata, Name = "Miata", BrandId = SeedData.Brands.Mazda },
-                new { Id = SeedData.Models.Cx5, Name = "CX-5", BrandId = SeedData.Brands.Mazda },
-                new { Id = SeedData.Models.Wrangler, Name = "Wrangler", BrandId = SeedData.Brands.Jeep },
-                new { Id = SeedData.Models.Cherokee, Name = "Cherokee", BrandId = SeedData.Brands.Jeep },
-                new { Id = SeedData.Models.Mustang, Name = "Mustang", BrandId = SeedData.Brands.Ford },
-                new { Id = SeedData.Models.F150, Name = "F-150", BrandId = SeedData.Brands.Ford },
-                new { Id = SeedData.Models.Civic, Name = "Civic", BrandId = SeedData.Brands.Honda },
-                new { Id = SeedData.Models.Accord, Name = "Accord", BrandId = SeedData.Brands.Honda },
-                new { Id = SeedData.Models.Clio, Name = "Clio", BrandId = SeedData.Brands.Renault },
-                new { Id = SeedData.Models.Megane, Name = "Megane", BrandId = SeedData.Brands.Renault },
-                new { Id = SeedData.Models.Golf, Name = "Golf", BrandId = SeedData.Brands.Volkswagen },
-                new { Id = SeedData.Models.Passat, Name = "Passat", BrandId = SeedData.Brands.Volkswagen }
+                new { Id = SeedData.SeedModels.Miata, Name = "Miata", BrandId = SeedData.SeedBrands.Mazda },
+                new { Id = SeedData.SeedModels.Cx5, Name = "CX-5", BrandId = SeedData.SeedBrands.Mazda },
+                new { Id = SeedData.SeedModels.Wrangler, Name = "Wrangler", BrandId = SeedData.SeedBrands.Jeep },
+                new { Id = SeedData.SeedModels.Cherokee, Name = "Cherokee", BrandId = SeedData.SeedBrands.Jeep },
+                new { Id = SeedData.SeedModels.Mustang, Name = "Mustang", BrandId = SeedData.SeedBrands.Ford },
+                new { Id = SeedData.SeedModels.F150, Name = "F-150", BrandId = SeedData.SeedBrands.Ford },
+                new { Id = SeedData.SeedModels.Civic, Name = "Civic", BrandId = SeedData.SeedBrands.Honda },
+                new { Id = SeedData.SeedModels.Accord, Name = "Accord", BrandId = SeedData.SeedBrands.Honda },
+                new { Id = SeedData.SeedModels.Clio, Name = "Clio", BrandId = SeedData.SeedBrands.Renault },
+                new { Id = SeedData.SeedModels.Megane, Name = "Megane", BrandId = SeedData.SeedBrands.Renault },
+                new { Id = SeedData.SeedModels.Golf, Name = "Golf", BrandId = SeedData.SeedBrands.Volkswagen },
+                new { Id = SeedData.SeedModels.Passat, Name = "Passat", BrandId = SeedData.SeedBrands.Volkswagen }
             );
-            //            builder.Entity<RepairType>().HasData(
-            //            new { Id = SeedData.RepairType.RestaurationComplete ,Name = "Restauration Complete"} ,
-            //            new { Id = SeedData.RepairType.RestaurationComplete ,Name = "Restauration Complete"} ,
-            //            new { Id = SeedData.RepairType.RotuleAvant          ,Name ="Rotule Avant"          } ,
-            //            new { Id = SeedData.RepairType.RotuleArriere        ,Name ="Rotule Arriere"        } ,
-            //                new { Id = SeedData.RepairType.Radiateur            ,Name ="Radiateur  "           } ,
-            //           new { Id = SeedData.RepairType.PneusAvant           ,Name ="Pneus Avant"           } ,
-            //              new { Id = SeedData.RepairType.PneusArriere         ,Name ="Pneus Arriere"         } ,
-            //          new { Id = SeedData.RepairType.Freins               ,Name ="Freins"                } ,
-            //          new { Id = SeedData.RepairType.Climatisation, Name = "Climatisation"               }
-            //          
-            //           );
+            builder.Entity<RepairType>().HasData(
+            new { Id = SeedData.SeedRepairType.RestaurationComplete, Name = "Restauration Complete" },
+            new { Id = SeedData.SeedRepairType.RestaurationComplete, Name = "Restauration Complete" },
+            new { Id = SeedData.SeedRepairType.RotuleAvant, Name = "Rotule Avant" },
+            new { Id = SeedData.SeedRepairType.RotuleArriere, Name = "Rotule Arriere" },
+            new { Id = SeedData.SeedRepairType.Radiateur, Name = "Radiateur  " },
+            new { Id = SeedData.SeedRepairType.PneusAvant, Name = "Pneus Avant" },
+            new { Id = SeedData.SeedRepairType.PneusArriere, Name = "Pneus Arriere" },
+            new { Id = SeedData.SeedRepairType.Freins, Name = "Freins" },
+            new { Id = SeedData.SeedRepairType.Climatisation, Name = "Climatisation" }
+
+           );
         }
     }
 }

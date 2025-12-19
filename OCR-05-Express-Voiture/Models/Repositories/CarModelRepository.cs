@@ -4,7 +4,7 @@ using OCR_05_Express_Voiture.Models.Entities;
 
 namespace OCR_05_Express_Voiture.Models.Repositories
 {
-    public class CarModelRepository : GenericRepository<CarModel>//, ICarModelRepository
+    public class CarModelRepository : GenericRepository<CarModel>, ICarModelRepository
     {
         protected readonly DbSet<CarModel> _dbSet;
 
@@ -25,5 +25,6 @@ namespace OCR_05_Express_Voiture.Models.Repositories
                 .OrderBy(cm => cm.Name)
                 .ToArrayAsync();
         }
+
     }
 }

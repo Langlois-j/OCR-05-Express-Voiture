@@ -1,10 +1,13 @@
-﻿using OCR_05_Express_Voiture.Data;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+
 namespace OCR_05_Express_Voiture.Models.Entities
 {
-    public partial class CarBrand : ApplicationDbContext
+    public partial class CarBrand
     {
-        public int Id {get ;set;}
+        [Key]
+        public int Id {get ;set; }
+      
         public required string  Name { get; set; }
 
     }

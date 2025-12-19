@@ -7,9 +7,9 @@ namespace OCR_05_Express_Voiture.Models.Repositories
    
         Task<T[]> GetAllAsync();
         Task<T?> GetByIdAsync(int id);
-        Task AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task? DeleteAsync(int id);
+        Task<bool> AddAsync(T entity);
+        Task<bool> UpdateAsync(T entity);
+        Task<bool> DeleteAsync(int id);
 
      
             

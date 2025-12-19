@@ -2,7 +2,7 @@
 {
     public class SeedData
     {
-        public static class Brands
+        public static class SeedBrands
         {
             public static readonly int Renault = 1;
             public static readonly int Mazda = 2;
@@ -12,7 +12,7 @@
             public static readonly int Volkswagen = 6;
         }
 
-        public static class Models
+        public static class SeedModels
         {
             public static readonly int Miata = 1;
             public static readonly int Cx5 = 2;
@@ -28,7 +28,7 @@
             public static readonly int Passat = 12;
         }
 
-        public static class RepairType
+        public static class SeedRepairType
         {
             public static readonly int RestaurationComplete = 1;
             public static readonly int RotuleAvant = 2;

@@ -24,22 +24,22 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 //Seeder
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
-    {
-        var db = services.GetRequiredService<ApplicationDbContext>();
-        // Applique les migrations et crée la base si nécessaire
-        db.Database.Migrate();
-    }
-    catch (Exception ex)
-    {
-        // loggez l'erreur si nécessaire
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Erreur lors de l'application des migrations");
-    }
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    try
+//    {
+//        var db = services.GetRequiredService<ApplicationDbContext>();
+//        // Applique les migrations et crée la base si nécessaire
+//        db.Database.Migrate();
+//    }
+//    catch (Exception ex)
+//    {
+//        // loggez l'erreur si nécessaire
+//        var logger = services.GetRequiredService<ILogger<Program>>();
+//        logger.LogError(ex, "Erreur lors de l'application des migrations");
+//    }
+//}
 
 
 

@@ -1,8 +1,11 @@
-﻿namespace OCR_05_Express_Voiture.Models.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OCR_05_Express_Voiture.Models.Entities
 {
-    public class Repair
+    public class CarRepair
     {
-    public int Id { get; set; }
+        [Key]
+        public int Id { get; set; }
     public int CarId { get; set; }
     public int RepairTypeId { get; set; }
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OCR_05_Express_Voiture.Models.Repositories
 {
-    public class CarRepository : GenericRepository<Car>//, ICarRepository
+    public class CarRepository : GenericRepository<Car>, ICarRepository
     {
         private static List<Car> _car;
         protected readonly DbSet<Car> _dbSet;
