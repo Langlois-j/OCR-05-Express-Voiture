@@ -22,9 +22,34 @@ namespace OCR_05_Express_Voiture.Data
         public DbSet<Car> Car { get; set; } = null!;
         public DbSet<CarRepair> CarRepair { get; set; } = null!;
 
+
+
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            // gestion de la suppression en cascade entre CarBrand et CarModel
+            builder.Entity<Car>()
+        .HasOne(c => c.Model)
+        .WithMany()
+        .HasForeignKey(c => c.CarModelId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Car>()
+.HasOne(c => c.Model)
+.WithMany()
+.HasForeignKey(c => c.CarBrandId)
+.OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<CarModel>()
+.HasOne(c => c.CarBrand)
+.WithMany()
+.HasForeignKey(c => c.CarBrandId)
+.OnDelete(DeleteBehavior.Restrict);
+
+
 
             // Seed des marques
             builder.Entity<CarBrand>().HasData(
