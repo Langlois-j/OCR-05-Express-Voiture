@@ -4,8 +4,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-OCR_05_Express_Voiture-3a5b8b12-e192-43e7-9c58-a80497cd33f6</UserSecretsId>
+    <!--<UserSecretsId>aspnet-OCR_05_Express_Voiture-3a5b8b12-e192-43e7-9c58-a80497cd33f6</UserSecretsId>-->
+    <UserSecretsId>aspnet-OCR_05_Express_Voiture-DevData</UserSecretsId>
     <RootNamespace>OCR_05_Express_Voiture</RootNamespace>
+  <RuntimeFrameworkVersion>8.0.20</RuntimeFrameworkVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,13 +15,15 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.20" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.22">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.20">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.22" />
-    <PackageReference Include="Moq" Version="4.20.72" />
-    <PackageReference Include="xunit" Version="2.9.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Vue\" />
   </ItemGroup>
 
 </Project>

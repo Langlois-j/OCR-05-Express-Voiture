@@ -21,7 +21,7 @@ namespace OCR_05_Express_Voiture.Models.Repositories
         public async Task<CarModel[]> GetAllByBrandAsync(int carBrandId)
         {
             return await _dbSet
-                .Where(cm => cm.BrandId == carBrandId)
+                .Where(cm => cm.CarBrandId == carBrandId)
                 .OrderBy(cm => cm.Name)
                 .ToArrayAsync();
         }

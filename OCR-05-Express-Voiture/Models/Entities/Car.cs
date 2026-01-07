@@ -9,10 +9,10 @@ namespace OCR_05_Express_Voiture.Models.Entities
 
         public required string VinCode { get; set; }
 
-        public int BrandId { get; set; }
+        public int CarBrandId { get; set; }
         public virtual CarBrand Brand { get; set; } = null!;
 
-        public int ModelId { get; set; }
+        public int CarModelId { get; set; }
         public virtual CarModel Model { get; set; } = null!;
 
         public string? TrimLevel { get; set; }
@@ -25,8 +25,6 @@ namespace OCR_05_Express_Voiture.Models.Entities
         public Boolean Sold { get; set; }
 
         public double RepairAmount { get; set; }
-
-
-
+        public string? ImagePath { get; set; }
     }
 }
