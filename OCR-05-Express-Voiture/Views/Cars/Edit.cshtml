@@ -1,0 +1,84 @@
+﻿@model OCR_05_Express_Voiture.Models.Entities.Car
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Car</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="VinCode" class="control-label"></label>
+                <input asp-for="VinCode" class="form-control" />
+                <span asp-validation-for="VinCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CarBrandId" class="control-label"></label>
+                <select asp-for="CarBrandId" class="form-control" asp-items="ViewBag.CarBrandId"></select>
+                <span asp-validation-for="CarBrandId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CarModelId" class="control-label"></label>
+                <input asp-for="CarModelId" class="form-control" />
+                <span asp-validation-for="CarModelId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrimLevel" class="control-label"></label>
+                <input asp-for="TrimLevel" class="form-control" />
+                <span asp-validation-for="TrimLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConstructionYear" class="control-label"></label>
+                <input asp-for="ConstructionYear" class="form-control" />
+                <span asp-validation-for="ConstructionYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mileage" class="control-label"></label>
+                <input asp-for="Mileage" class="form-control" />
+                <span asp-validation-for="Mileage" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ForSell" /> @Html.DisplayNameFor(model => model.ForSell)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Sold" /> @Html.DisplayNameFor(model => model.Sold)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="RepairAmount" class="control-label"></label>
+                <input asp-for="RepairAmount" class="form-control" />
+                <span asp-validation-for="RepairAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImagePath" class="control-label"></label>
+                <input asp-for="ImagePath" class="form-control" />
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RepairDescription" class="control-label"></label>
+                <input asp-for="RepairDescription" class="form-control" />
+                <span asp-validation-for="RepairDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

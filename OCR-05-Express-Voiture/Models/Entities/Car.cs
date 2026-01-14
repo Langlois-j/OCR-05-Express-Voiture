@@ -20,11 +20,13 @@ namespace OCR_05_Express_Voiture.Models.Entities
         public int ConstructionYear { get; set; }
 
         public int Mileage { get; set; }
+       
 
         public Boolean ForSell { get; set; }
         public Boolean Sold { get; set; }
 
         public double RepairAmount { get; set; }
         public string? ImagePath { get; set; }
+        public int RepairDescription { get; set; }
     }
 }

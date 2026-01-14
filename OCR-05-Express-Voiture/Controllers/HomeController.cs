@@ -15,7 +15,7 @@ namespace OCR_05_Express_Voiture.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Cars");
         }
 
         public IActionResult Privacy()

@@ -18,9 +18,9 @@ namespace OCR_05_Express_Voiture.Data
         // DbSet pour les classes
         public DbSet<CarBrand> CarBrand { get; set; } = null!;
         public DbSet<CarModel> CarModel { get; set; } = null!;
-        public DbSet<RepairType> RepairType { get; set; } = null!;
+        
         public DbSet<Car> Car { get; set; } = null!;
-        public DbSet<CarRepair> CarRepair { get; set; } = null!;
+      
 
 
 
@@ -76,18 +76,7 @@ namespace OCR_05_Express_Voiture.Data
                 new { Id = SeedData.SeedModels.Golf, Name = "Golf", CarBrandId = SeedData.SeedBrands.Volkswagen },
                 new { Id = SeedData.SeedModels.Passat, Name = "Passat", CarBrandId = SeedData.SeedBrands.Volkswagen }
             );
-            builder.Entity<RepairType>().HasData(
-            new { Id = SeedData.SeedRepairType.RestaurationComplete, Name = "Restauration Complete" },
-           // new { Id = SeedData.SeedRepairType.RestaurationComplete, Name = "Restauration Complete" },
-            new { Id = SeedData.SeedRepairType.RotuleAvant, Name = "Rotule Avant" },
-            new { Id = SeedData.SeedRepairType.RotuleArriere, Name = "Rotule Arriere" },
-            new { Id = SeedData.SeedRepairType.Radiateur, Name = "Radiateur  " },
-            new { Id = SeedData.SeedRepairType.PneusAvant, Name = "Pneus Avant" },
-            new { Id = SeedData.SeedRepairType.PneusArriere, Name = "Pneus Arriere" },
-            new { Id = SeedData.SeedRepairType.Freins, Name = "Freins" },
-            new { Id = SeedData.SeedRepairType.Climatisation, Name = "Climatisation" }
 
-           );
         }
     }
 }

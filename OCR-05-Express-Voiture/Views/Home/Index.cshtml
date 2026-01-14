@@ -1,8 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<html lang="fr">
+<partial name="_LoginPartial" />
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Redirection vers la page des voitures -->
+<script>
+    window.location.href = '/cars';
+</script>
