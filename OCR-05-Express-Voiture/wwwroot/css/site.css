@@ -13,12 +13,13 @@
     --info-color: #17a2b8;
     --light-gray: #f5f5f5;
     --border-color: #ddd;
-
     --text-muted: #666;
     --text-light: #999;
     /*Bouton*/
     --button-generic-background: #D9A963;
+    --button-generic-color: #2C1810;
     --button-generic-background-hover: #B99056;
+    --button-generic-color-hover: #FFFFFF;
     /*Bouton sans texte exemple "+" */
     --button-smart-background: #F2E3CE;
     --button-smart-color: #D9A963;
@@ -26,7 +27,6 @@
     --button-smart-color-hover: #F2E3CE;
     /*Texte*/
     --text-color: #2C1810;
-}
 }
 
 /* ============================================
@@ -55,7 +55,7 @@ body {
    ============================================ */
 .navbar {
     background-color: white;
-    padding: 15px 40px;
+    padding: 20px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -63,10 +63,31 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.navbar-brand {
+.navbar .navbar-brand {
     font-weight: bold;
-    font-size: 20px;
-    /*color: var(--border-color);*/
+    font-size: 25px;
+    color: var(--text-color) !important;
+    text-decoration: none;
+}
+
+.navbar .navbar-brand:hover {
+    color: var(--text-color) !important;
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.navbar-nav .nav-item {
+    display: flex;
+    align-items: center;
 }
 
 .navbar-links {
@@ -75,12 +96,11 @@ body {
     list-style: none;
     margin: 0;
     padding: 0;
-    border: none
 }
 
-.navbar-links a {
+.navbar .navbar-links a {
     text-decoration: none;
-    /*color: black;*/
+    color: var(--text-color);
     font-size: 13px;
     font-weight: 500;
     transition: color 0.3s ease;
@@ -91,28 +111,67 @@ body {
     background: none;
     font-size: 13px;
     font-weight: 500;
-    /*color: black;*/
+    color: var(--text-color);
     cursor: pointer;
-    padding: 5;
-    margin: 5;
-    /*font-family: inherit;*/
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
     transition: color 0.3s ease;
 }
 
-.navbar-links button:hover {
-    color: var(--primary-color);
-}
+    .navbar-links button:hover {
+        font-weight: bold;
+            }
 
-.navbar-links a:hover {
-    color: var(--primary-color);
-}
+    .navbar-links a:hover {
+        font-weight: bold;
+    }
 
 .nav-link {
     padding: 0 !important;
     margin: 0 !important;
     border: none !important;
     background: none !important;
+    color: var(--text-color) !important;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.3s ease;
 }
+
+    .nav-link:hover {
+        color: var(--primary-color) !important;
+        font-weight: bold;
+    }
+
+.nav-link form {
+    display: inline;
+    padding: 0;
+    margin: 0;
+}
+
+    .nav-link button {
+        border: none;
+        background: none;
+        font-size: 17px;
+        font-weight: 500;
+        color: var(--text-color);
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+        transition: color 0.3s ease;
+    }
+
+        .nav-link button:hover {
+            font-weight: bold;
+            border: none;
+            background: none;
+            font-size: 17px;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+            transition: color 0.3s ease;
+        }
 
 /* ============================================
    CONTENEURS PRINCIPAUX
@@ -159,6 +218,20 @@ h1, h2, h3, h4, h5, h6 {
 /* ============================================
    FORMULAIRES
    ============================================ */
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    background-color: white !important;
+    color: var(--text-color) !important;
+    transition: all 0.3s ease;
+    background-color: white !important;
+    color: var(--text-color) !important;
+}
 .form-group {
     margin-bottom: 25px;
 }
@@ -184,8 +257,25 @@ h1, h2, h3, h4, h5, h6 {
     border: 1px solid var(--border-color);
     border-radius: 4px;
     font-size: 14px;
-    font-family: Arial, sans-serif;
+    background-color: white !important;
+    color: var(--text-color) !important;
     transition: all 0.3s ease;
+}
+
+.form-control {
+    background-color: white !important;
+    color: var(--text-color) !important;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="file"],
+select,
+textarea {
+    background-color: white !important;
+    color: var(--text-color) !important;
 }
 
 .form-group input[type="text"]:focus,
@@ -199,6 +289,7 @@ h1, h2, h3, h4, h5, h6 {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 5px rgba(139, 115, 85, 0.3);
+    background-color: white !important;
 }
 
 .form-group textarea {
@@ -224,13 +315,14 @@ h1, h2, h3, h4, h5, h6 {
 /* ============================================
    BOUTONS
    ============================================ */
-.btn-add-car,
+/*.btn-add-car,
 .btn-submit,
-.btn {
+.btn*/
+button{
     display: inline-block;
     padding: 12px 40px;
-    background-color: var(--secondary-color);
-    color: white;
+    background-color: var(--button-generic-background);
+    color: var(--button-generic-color);
     text-decoration: none;
     border-radius: 4px;
     font-size: 14px;
@@ -240,11 +332,13 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
 }
 
-.btn-add-car:hover,
-.btn-submit:hover,
-.btn:hover {
-    background-color: var(--secondary-hover);
-}
+/*    .btn-add-car:hover,
+    .btn-submit:hover,
+    .btn:hover*/
+    button:hover{
+        background-color: var(--button-generic-background-hover);
+        color: var(--button-generic-color-hover);
+    }
 
 .btn-details,
 .btn-edit {
