@@ -30,12 +30,12 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var db = services.GetRequiredService<ApplicationDbContext>();
-        // Applique les migrations et crée la base si nécessaire
+        // Applique les migrations et crï¿½e la base si nï¿½cessaire
         db.Database.Migrate();
     }
     catch (Exception ex)
     {
-        // loggez l'erreur si nécessaire
+        // loggez l'erreur si nï¿½cessaire
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "Erreur lors de l'application des migrations");
     }
