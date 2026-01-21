@@ -1,9 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using OCR_05_Express_Voiture.Data;
-using OCR_05_Express_Voiture.Models.Entities;
-using System;
-using System.Collections.Generic;
 
 namespace OCR_05_Express_Voiture.Models.Repositories
 {
@@ -27,7 +23,7 @@ namespace OCR_05_Express_Voiture.Models.Repositories
         {
             return await _dbSet.FindAsync(id);
         }
-   
+
         public virtual async Task<bool> AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
@@ -57,7 +53,7 @@ namespace OCR_05_Express_Voiture.Models.Repositories
         }
         public virtual async Task<bool> DeleteAsync(int id)
         {
-            
+
             var entity = await GetByIdAsync(id);
             if (entity is not null)
             {

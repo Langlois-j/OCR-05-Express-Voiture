@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OCR_05_Express_Voiture.Data;
 using OCR_05_Express_Voiture.Models.Entities;
-using System.Threading.Tasks;
 
 namespace OCR_05_Express_Voiture.Models.Repositories
 {

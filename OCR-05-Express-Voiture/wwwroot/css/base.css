@@ -1,0 +1,36 @@
+/* ============================================
+   STYLES GÉNÉRAUX
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/* Titres */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Liens */
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+a:hover {
+    font-weight: bold;
+}

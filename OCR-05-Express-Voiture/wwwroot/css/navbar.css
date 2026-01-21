@@ -1,0 +1,111 @@
+/* ============================================
+   NAVBAR / NAVIGATION
+   ============================================ */
+.navbar {
+    background-color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .navbar-brand {
+    font-weight: bold;
+    font-size: 25px;
+    color: var(--text-color) !important;
+    text-decoration: none;
+}
+
+.navbar .navbar-brand:hover {
+    color: var(--text-color) !important;
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.navbar-nav .nav-item {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar .navbar-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-links button {
+    border: none;
+    background: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    transition: color 0.3s ease;
+}
+
+.navbar-links button:hover,
+.navbar-links a:hover {
+    font-weight: bold;
+}
+
+.nav-link {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    background: none !important;
+    color: var(--text-color) !important;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+    font-weight: bold;
+}
+
+.nav-link form {
+    display: inline;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-link button {
+    border: none;
+    background: none;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.nav-link button:hover {
+    font-weight: bold;
+}

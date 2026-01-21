@@ -256,8 +256,8 @@ namespace OCR_05_Express_Voiture.Migrations
                     b.Property<double>("RepairAmount")
                         .HasColumnType("float");
 
-                    b.Property<int>("RepairDescription")
-                        .HasColumnType("int");
+                    b.Property<string>("RepairDescription")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Sold")
                         .HasColumnType("bit");

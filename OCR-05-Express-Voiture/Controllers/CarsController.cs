@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OCR_05_Express_Voiture.Data;
 using OCR_05_Express_Voiture.Models.Entities;
+using OCR_05_Express_Voiture.Models.Vue;
 
 namespace OCR_05_Express_Voiture.Controllers
 {
@@ -22,8 +19,9 @@ namespace OCR_05_Express_Voiture.Controllers
         // GET: Cars
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Car.Include(c => c.Brand).Include(c => c.Model);
-            return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext = _context.Car.Include(c => c.Brand).Include(c => c.Model);
+            //return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Car.ToListAsync());
         }
 
         // GET: Cars/Details/5
@@ -59,14 +57,35 @@ namespace OCR_05_Express_Voiture.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,VinCode,CarBrandId,CarModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath")] Car car)
+        public async Task<IActionResult> Create(CarVueModel car)
         {
+            // DEBUG: Afficher les erreurs ModelState
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Erreur ModelState: {error.ErrorMessage}");
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Add(car);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(car);
+                    await _context.SaveChangesAsync();
+                    System.Diagnostics.Debug.WriteLine($"Voiture créée avec succès: {car.VinCode}");
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Erreur lors de la création: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+                    ModelState.AddModelError("", $"Erreur: {ex.Message}");
+                }
             }
+
             ViewData["CarBrandId"] = new SelectList(_context.CarBrand, "Id", "Name", car.CarBrandId);
             ViewData["CarModelId"] = new SelectList(_context.CarModel, "Id", "Name", car.CarModelId);
             return View(car);
@@ -95,7 +114,7 @@ namespace OCR_05_Express_Voiture.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,VinCode,CarBrandId,CarModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath")] Car car)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,VinCode,CarBrandId,CarModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath,RepairDescription")] Car car)
         {
             if (id != car.Id)
             {
@@ -165,6 +184,21 @@ namespace OCR_05_Express_Voiture.Controllers
         private bool CarExists(int id)
         {
             return _context.Car.Any(e => e.Id == id);
+        }
+        // Méthode AJAX pour récupérer les modèles selon la marque
+        [HttpGet]
+        public JsonResult GetModelsByBrand(int brandId)
+        {
+            var models = _context.CarModel
+                .Where(m => m.CarBrandId == brandId)
+                .Select(m => new
+                {
+                    id = m.Id,
+                    name = m.Name // Ajustez selon le nom de votre propriété
+                })
+                .ToList();
+
+            return Json(models);
         }
     }
 }

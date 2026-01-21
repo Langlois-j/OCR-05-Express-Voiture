@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OCR_05_Express_Voiture.Models.Entities;
-using System;
-using System.Reflection.Emit;
 
 
 namespace OCR_05_Express_Voiture.Data
@@ -18,9 +16,9 @@ namespace OCR_05_Express_Voiture.Data
         // DbSet pour les classes
         public DbSet<CarBrand> CarBrand { get; set; } = null!;
         public DbSet<CarModel> CarModel { get; set; } = null!;
-        
+
         public DbSet<Car> Car { get; set; } = null!;
-      
+
 
 
 

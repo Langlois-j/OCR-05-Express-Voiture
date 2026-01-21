@@ -1,0 +1,75 @@
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@@media (max-width: 768px) {
+    .cars-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+
+    .navbar-links {
+        gap: 15px;
+    }
+
+    .main-container {
+        padding: 30px 20px;
+    }
+
+    .page-title {
+        font-size: 32px;
+        margin-bottom: 30px;
+    }
+
+    .container-form {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    .button-section {
+        margin-bottom: 30px;
+    }
+
+    .btn-add-car,
+    .btn-submit {
+        width: 100%;
+    }
+
+    .login-container {
+        max-width: 100%;
+        margin: 20px;
+        padding: 20px;
+    }
+}
+
+@@media (max-width: 480px) {
+    .navbar {
+        padding: 15px;
+    }
+
+    .navbar .navbar-brand {
+        font-size: 18px;
+    }
+
+    .navbar-nav {
+        gap: 15px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    .cars-grid {
+        gap: 20px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+}

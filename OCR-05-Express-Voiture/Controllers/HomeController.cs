@@ -1,6 +1,6 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using OCR_05_Express_Voiture.Models;
+using System.Diagnostics;
 
 namespace OCR_05_Express_Voiture.Controllers
 {

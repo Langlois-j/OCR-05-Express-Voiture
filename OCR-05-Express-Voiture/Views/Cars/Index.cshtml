@@ -14,229 +14,7 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-     <style>
-        /* Button section */
-        .button-section {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-       /*  body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-        }
-
-        /* Navbar */
-        .navbar {
-            background-color: white;
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 16px;
-            color: black;
-        }
-
-        .navbar-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar-links a {
-            text-decoration: none;
-            color: black;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .navbar-links a:hover {
-            color: #8b7355;
-        }
-
-        /* Main content */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 40px;
-        }
-
-        /* Page title */
-        .page-title {
-            text-align: center;
-            font-size: 42px;
-            font-weight: 300;
-            color: #8b7355;
-            margin-bottom: 40px;
-            font-style: italic;
-        }
-
-
-
-        .btn-add-car {
-            display: inline-block;
-            padding: 10px 30px;
-            background-color: #c9a961;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 13px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-add-car:hover {
-            background-color: #b8945d;
-        }
-
-        /* Cars grid */
-        .cars-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 50px;
-            margin-top: 40px;
-        }
-
-        .car-card {
-            background-color: white;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .car-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        .car-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            background-color: #e0e0e0;
-        }
-
-        .car-info {
-            padding: 20px;
-        }
-
-        .car-price {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .car-details {
-            font-size: 12px;
-            color: #666;
-            line-height: 1.8;
-        }
-
-        .car-details-item {
-            margin-bottom: 5px;
-        }
-
-        .car-details-label {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .car-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .btn-details {
-            flex: 1;
-            padding: 8px 12px;
-            background-color: #8b7355;
-            color: white;
-            text-decoration: none;
-            text-align: center;
-            border-radius: 3px;
-            font-size: 12px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-details:hover {
-            background-color: #6d5a45;
-        }
-
-        .btn-delete {
-            padding: 8px 12px;
-            background-color: #dc3545;
-            color: white;
-            text-decoration: none;
-            text-align: center;
-            border-radius: 3px;
-            font-size: 12px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-delete:hover {
-            background-color: #c82333;
-        }
-
-        /* Empty state */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #999;
-        }
-
-        .empty-state p {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        /* Responsive */
-        @@media (max-width: 768px) {
-            .cars-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .navbar {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px 20px;
-            }
-
-            .navbar-links {
-                gap: 15px;
-            }
-
-            .main-container {
-                padding: 30px 20px;
-            }
-
-            .page-title {
-                font-size: 32px;
-                margin-bottom: 30px;
-            }
-        } */
-    </style>  
+     
 </head>
 <body>
     <!-- Main Content -->
@@ -244,12 +22,12 @@
         <!-- Page Title -->
         <h1 class="page-title">Nos voitures</h1>
         @if (SignInManager.IsSignedIn(User))
-{
+{ 
         <!-- Button Section -->
         <div class="button-section">
-            <a href="/cars/create" class="btn-submit">+ Ajouter une voiture</a>
+            <a href="/cars/create" class="btn-add-car">+ Ajouter une voiture</a>
         </div>
-}
+ } 
 }
         <!-- Cars Grid -->
         @if (Model != null && Model.Any())
@@ -308,7 +86,7 @@
                 <p>Aucune voiture disponible pour le moment.</p>
                 @if (SignInManager.IsSignedIn(User))
                     {
-                        <a href="/cars/create" class="btn-add-car">Ajouter la première voiture</a>
+                    <a href="/cars/create" class="btn-add-car">Ajouter la première voiture</a>
                     }
                 </div>
         }

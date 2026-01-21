@@ -66,19 +66,6 @@ namespace OCR_05_Express_Voiture.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RepairType",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RepairType", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -201,7 +188,7 @@ namespace OCR_05_Express_Voiture.Migrations
                         column: x => x.CarBrandId,
                         principalTable: "CarBrand",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,6 +199,7 @@ namespace OCR_05_Express_Voiture.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VinCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CarBrandId = table.Column<int>(type: "int", nullable: false),
+                    BrandId = table.Column<int>(type: "int", nullable: false),
                     CarModelId = table.Column<int>(type: "int", nullable: false),
                     TrimLevel = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConstructionYear = table.Column<int>(type: "int", nullable: false),
@@ -219,49 +207,24 @@ namespace OCR_05_Express_Voiture.Migrations
                     ForSell = table.Column<bool>(type: "bit", nullable: false),
                     Sold = table.Column<bool>(type: "bit", nullable: false),
                     RepairAmount = table.Column<double>(type: "float", nullable: false),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RepairDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Car", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Car_CarBrand_CarBrandId",
-                        column: x => x.CarBrandId,
+                        name: "FK_Car_CarBrand_BrandId",
+                        column: x => x.BrandId,
                         principalTable: "CarBrand",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Car_CarModel_CarModelId",
-                        column: x => x.CarModelId,
+                        name: "FK_Car_CarModel_CarBrandId",
+                        column: x => x.CarBrandId,
                         principalTable: "CarModel",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CarRepair",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CarId = table.Column<int>(type: "int", nullable: false),
-                    RepairTypeId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CarRepair", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CarRepair_Car_CarId",
-                        column: x => x.CarId,
-                        principalTable: "Car",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CarRepair_RepairType_RepairTypeId",
-                        column: x => x.RepairTypeId,
-                        principalTable: "RepairType",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -275,21 +238,6 @@ namespace OCR_05_Express_Voiture.Migrations
                     { 4, "Ford" },
                     { 5, "Honda" },
                     { 6, "Volkswagen" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "RepairType",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "Restauration Complete" },
-                    { 2, "Rotule Avant" },
-                    { 3, "Rotule Arriere" },
-                    { 4, "Radiateur  " },
-                    { 5, "Pneus Avant" },
-                    { 6, "Pneus Arriere" },
-                    { 7, "Freins" },
-                    { 8, "Climatisation" }
                 });
 
             migrationBuilder.InsertData(
@@ -351,29 +299,19 @@ namespace OCR_05_Express_Voiture.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Car_BrandId",
+                table: "Car",
+                column: "BrandId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Car_CarBrandId",
                 table: "Car",
                 column: "CarBrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Car_CarModelId",
-                table: "Car",
-                column: "CarModelId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CarModel_CarBrandId",
                 table: "CarModel",
                 column: "CarBrandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CarRepair_CarId",
-                table: "CarRepair",
-                column: "CarId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CarRepair_RepairTypeId",
-                table: "CarRepair",
-                column: "RepairTypeId");
         }
 
         /// <inheritdoc />
@@ -395,19 +333,13 @@ namespace OCR_05_Express_Voiture.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CarRepair");
+                name: "Car");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Car");
-
-            migrationBuilder.DropTable(
-                name: "RepairType");
 
             migrationBuilder.DropTable(
                 name: "CarModel");

@@ -1,0 +1,31 @@
+/* ============================================
+   VARIABLES CSS GLOBALES
+   ============================================ */
+:root {
+    /* Couleurs principales */
+    --primary-color: #8b7355;
+    --primary-hover: #6d5a45;
+    --secondary-color: #c9a961;
+    --secondary-hover: #b8945d;
+    --danger-color: #dc3545;
+    --danger-hover: #c82333;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --light-gray: #f5f5f5;
+    --border-color: #ddd;
+    --text-muted: #666;
+    --text-light: #999;
+    /* Boutons */
+    --button-generic-background: #D9A963;
+    --button-generic-color: #2C1810;
+    --button-generic-background-hover: #B99056;
+    --button-generic-color-hover: #FFFFFF;
+    /* Bouton sans texte exemple "+" */
+    --button-smart-background: #F2E3CE;
+    --button-smart-color: #D9A963;
+    --button-smart-background-hover: #B99056;
+    --button-smart-color-hover: #F2E3CE;
+    /* Texte */
+    --text-color: #2C1810;
+    --background-color: #FFFFFF;
+}

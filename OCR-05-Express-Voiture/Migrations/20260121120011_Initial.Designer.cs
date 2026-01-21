@@ -12,7 +12,7 @@ using OCR_05_Express_Voiture.Data;
 namespace OCR_05_Express_Voiture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260107112720_Initial")]
+    [Migration("20260121120011_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -235,6 +235,9 @@ namespace OCR_05_Express_Voiture.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CarBrandId")
                         .HasColumnType("int");
 
@@ -256,6 +259,9 @@ namespace OCR_05_Express_Voiture.Migrations
                     b.Property<double>("RepairAmount")
                         .HasColumnType("float");
 
+                    b.Property<string>("RepairDescription")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Sold")
                         .HasColumnType("bit");
 
@@ -268,9 +274,9 @@ namespace OCR_05_Express_Voiture.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarBrandId");
+                    b.HasIndex("BrandId");
 
-                    b.HasIndex("CarModelId");
+                    b.HasIndex("CarBrandId");
 
                     b.ToTable("Car");
                 });
@@ -420,88 +426,6 @@ namespace OCR_05_Express_Voiture.Migrations
                         });
                 });
 
-            modelBuilder.Entity("OCR_05_Express_Voiture.Models.Entities.CarRepair", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RepairTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarId");
-
-                    b.HasIndex("RepairTypeId");
-
-                    b.ToTable("CarRepair");
-                });
-
-            modelBuilder.Entity("OCR_05_Express_Voiture.Models.Entities.RepairType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RepairType");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Restauration Complete"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Rotule Avant"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Rotule Arriere"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Radiateur  "
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Pneus Avant"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Pneus Arriere"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Freins"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Climatisation"
-                        });
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -557,13 +481,13 @@ namespace OCR_05_Express_Voiture.Migrations
                 {
                     b.HasOne("OCR_05_Express_Voiture.Models.Entities.CarBrand", "Brand")
                         .WithMany()
-                        .HasForeignKey("CarBrandId")
+                        .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("OCR_05_Express_Voiture.Models.Entities.CarModel", "Model")
                         .WithMany()
-                        .HasForeignKey("CarModelId")
+                        .HasForeignKey("CarBrandId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -577,29 +501,10 @@ namespace OCR_05_Express_Voiture.Migrations
                     b.HasOne("OCR_05_Express_Voiture.Models.Entities.CarBrand", "CarBrand")
                         .WithMany()
                         .HasForeignKey("CarBrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("CarBrand");
-                });
-
-            modelBuilder.Entity("OCR_05_Express_Voiture.Models.Entities.CarRepair", b =>
-                {
-                    b.HasOne("OCR_05_Express_Voiture.Models.Entities.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OCR_05_Express_Voiture.Models.Entities.RepairType", "RepairType")
-                        .WithMany()
-                        .HasForeignKey("RepairTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Car");
-
-                    b.Navigation("RepairType");
                 });
 #pragma warning restore 612, 618
         }

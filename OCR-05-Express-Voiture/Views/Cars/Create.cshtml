@@ -1,4 +1,4 @@
-@model OCR_05_Express_Voiture.Models.Entities.Car
+@model OCR_05_Express_Voiture.Models.Vue.CarVueModel
 
 @{
     ViewData["Title"] = "Ajouter une voiture";
@@ -19,29 +19,14 @@
     <div class="container-form">
         <!-- Page Title -->
         <h1 class="page-title">Ajouter une voiture</h1>
-        <p class="page-subtitle">Tous les champs sont obligatoires</p>
+        <p class="page-subtitle">Les champs marqués * sont obligatoires</p>
 
         <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <!-- Prix de vente -->
-            <div class="form-group">
-                <label asp-for="RepairAmount" class="control-label">Prix de vente</label>
-                <input asp-for="RepairAmount" class="form-control" type="number" step="0.01" placeholder="Entrez le prix" />
-                <span asp-validation-for="RepairAmount" class="form-validation"></span>
-            </div>
-
-            <!-- Année -->
-            <div class="form-group">
-                <label asp-for="ConstructionYear" class="control-label">Année</label>
-                <input asp-for="ConstructionYear" class="form-control" type="number" placeholder="Entrez l'année de construction" />
-                <span asp-validation-for="ConstructionYear" class="form-validation"></span>
-            </div>
-
             <!-- Marque -->
             <div class="form-group">
                 <label asp-for="CarBrandId" class="control-label">Marque</label>
-                <select asp-for="CarBrandId" class="form-control" asp-items="ViewBag.CarBrandId">
+                <select asp-for="CarBrandId" id="brandSelect" class="form-control" asp-items="ViewBag.CarBrandId">
                     <option value="">-- Sélectionnez une marque --</option>
                 </select>
                 <span asp-validation-for="CarBrandId" class="form-validation"></span>
@@ -50,8 +35,8 @@
             <!-- Modèle -->
             <div class="form-group">
                 <label asp-for="CarModelId" class="control-label">Modèle</label>
-                <select asp-for="CarModelId" class="form-control" asp-items="ViewBag.CarModelId">
-                    <option value="">-- Sélectionnez un modèle --</option>
+                <select asp-for="CarModelId" id="modelSelect" class="form-control" disabled>
+                    <option value="">-- Sélectionnez d'abord une marque --</option>
                 </select>
                 <span asp-validation-for="CarModelId" class="form-validation"></span>
             </div>
@@ -63,6 +48,14 @@
                 <span asp-validation-for="TrimLevel" class="form-validation"></span>
             </div>
 
+            <!-- Année -->
+            <div class="form-group">
+                <label asp-for="ConstructionYear" class="control-label">Année</label>
+                <input asp-for="ConstructionYear" class="form-control" type="number" placeholder="Entrez l'année de construction" />
+                <span asp-validation-for="ConstructionYear" class="form-validation"></span>
+            </div>
+
+
             <!-- Kilométrage -->
             <div class="form-group">
                 <label asp-for="Mileage" class="control-label">Kilométrage</label>
@@ -71,7 +64,11 @@
             </div>
 
             <!-- VIN Code (caché mais requis) -->
-            <input type="hidden" asp-for="VinCode" value="TEMP-VIN" />
+            <div class="form-group">
+                <label asp-for="VinCode" class="control-label">Code VIN</label>
+                <input asp-for="VinCode" class="form-control" type="text" placeholder="Entrez le code VIN" />
+                <span asp-validation-for="VinCode" class="form-validation"></span>
+            </div>
 
             <!-- Image -->
             <div class="form-group">
@@ -86,12 +83,24 @@
                 <span asp-validation-for="ImagePath" class="form-validation"></span>
             </div>
 
+            <!-- Description des réparations -->
+            <div class="form-group">
+                <label asp-for="RepairDescription" class="control-label">Description des réparations</label>
+                <textarea asp-for="RepairDescription" class="form-control" rows="4" placeholder="Décrivez les réparations effectuées ou l'état du véhicule"></textarea>
+                <span asp-validation-for="RepairDescription" class="form-validation"></span>
+            </div>
+            <!-- Montant réparation -->
+            <div class="form-group">
+                <label asp-for="RepairAmount" class="control-label">Monant réparations</label>
+                <input asp-for="RepairAmount" class="form-control" type="number" step="0.01" placeholder="Entrez le prix" />
+                <span asp-validation-for="RepairAmount" class="form-validation"></span>
+            </div>
             <!-- État de la voiture -->
             <div class="form-group">
-                <label class="control-label">État de la voiture</label>
+                <label class="control-label">Paramétres</label>
                 <div class="checkbox-group">
                     <label>
-                        <input asp-for="ForSell" type="checkbox" /> À vendre
+                        <input asp-for="ForSell" type="checkbox" /> Visible sur le site
                     </label>
                     <label>
                         <input asp-for="Sold" type="checkbox" /> Vendue
@@ -108,6 +117,59 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Quand on change la marque
+            $('#brandSelect').change(function () {
+                var brandId = $(this).val();
+                var modelSelect = $('#modelSelect');
+
+                // Réinitialiser la liste des modèles
+                modelSelect.empty();
+                modelSelect.append('<option value="">-- Chargement... --</option>');
+                modelSelect.prop('disabled', true);
+
+                if (brandId) {
+                    // Appel AJAX pour récupérer les modèles
+                    $.ajax({
+                        url: '@Url.Action("GetModelsByBrand", "Cars")',
+                        type: 'GET',
+                        data: { brandId: brandId },
+                        success: function (data) {
+                            modelSelect.empty();
+
+                            if (data.length > 0) {
+                                modelSelect.append('<option value="">-- Sélectionnez un modèle --</option>');
+
+                                // Ajouter les modèles récupérés
+                                $.each(data, function (i, model) {
+                                    modelSelect.append(
+                                        $('<option></option>')
+                                            .val(model.id)
+                                            .text(model.name)
+                                    );
+                                });
+
+                                modelSelect.prop('disabled', false);
+                            } else {
+                                modelSelect.append('<option value="">-- Aucun modèle disponible --</option>');
+                            }
+                        },
+                        error: function () {
+                            modelSelect.empty();
+                            modelSelect.append('<option value="">-- Erreur de chargement --</option>');
+                            alert('Erreur lors du chargement des modèles');
+                        }
+                    });
+                } else {
+                    // Si aucune marque sélectionnée
+                    modelSelect.empty();
+                    modelSelect.append('<option value="">-- Sélectionnez d\'abord une marque --</option>');
+                }
+            });
+        });
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 </body>
 </html>

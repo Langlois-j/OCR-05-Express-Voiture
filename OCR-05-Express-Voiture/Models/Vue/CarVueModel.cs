@@ -1,22 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using OCR_05_Express_Voiture.Models.Entities;
+using System;
+using System.Resources;
+using System.Reflection;
+using System.Globalization;
+using System.ComponentModel.DataAnnotations;
 
-namespace OCR_05_Express_Voiture.Models.Entities
+namespace OCR_05_Express_Voiture.Models.Vue
 {
-    public class Car
+    public class CarVueModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [BindNever]
         public int Id { get; set; }
-        [Required(
+        [Required (
             ErrorMessage = "Code VIM nécéssaire.")]
         public required string VinCode { get; set; }
         [Required(
            ErrorMessage = "Constructeur nécéssaire.")]
         public int CarBrandId { get; set; }
         public virtual CarBrand Brand { get; set; } = null!;
-            [Required(
-        ErrorMessage = "Model nécéssaire.")]
+        [Required(
+    ErrorMessage = "Model nécéssaire.")]
 
         public int CarModelId { get; set; }
         public virtual CarModel Model { get; set; } = null!;
