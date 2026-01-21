@@ -38,7 +38,7 @@
                     <div class="car-card">
                         <!-- Car Image -->
                         <img src="@(string.IsNullOrEmpty(car.ImagePath) ? "/images/placeholder-car.jpg" : car.ImagePath)" 
-                             alt="@car.Brand?.Name @car.Model?.Name" 
+                          @*    alt="@car.Brand?.Name @car.Model?.Name"  *@
                              class="car-image" />
 
                         <!-- Car Info -->
@@ -52,10 +52,10 @@
                                     <span class="car-details-label">Année:</span> @car.ConstructionYear
                                 </div>
                                 <div class="car-details-item">
-                                    <span class="car-details-label">Marque:</span> @car.Brand?.Name
+                                    <span class="car-details-label">Marque:</span> @* @car.Brand?.Name *@
                                 </div>
                                 <div class="car-details-item">
-                                    <span class="car-details-label">Modèle:</span> @car.Model?.Name
+                                    <span class="car-details-label">Modèle:</span> @* @car.Model?.Name *@
                                 </div>
                                 <div class="car-details-item">
                                     <span class="car-details-label">Finition:</span> @(car.TrimLevel ?? "Non spécifiée")

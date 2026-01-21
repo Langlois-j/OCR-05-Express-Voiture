@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OCR_05_Express_Voiture.Data;
 using OCR_05_Express_Voiture.Models.Entities;
-using OCR_05_Express_Voiture.Models.Vue;
 
 namespace OCR_05_Express_Voiture.Controllers
 {
@@ -19,9 +18,9 @@ namespace OCR_05_Express_Voiture.Controllers
         // GET: Cars
         public async Task<IActionResult> Index()
         {
-            //var applicationDbContext = _context.Car.Include(c => c.Brand).Include(c => c.Model);
-            //return View(await applicationDbContext.ToListAsync());
-            return View(await _context.Car.ToListAsync());
+            var applicationDbContext = _context.Car.Include(c => c.Brand).Include(c => c.Model);
+            return View(await applicationDbContext.ToListAsync());
+            //return View(await _context.Car.ToListAsync());
         }
 
         // GET: Cars/Details/5
@@ -57,8 +56,11 @@ namespace OCR_05_Express_Voiture.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CarVueModel car)
+        public async Task<IActionResult> Create([Bind("Id,VinCode,CarBrandId,CarModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath,RepairDescription")] Car car)
         {
+            ModelState.Remove("ImagePath");
+            ModelState.Remove("Brand");      
+            ModelState.Remove("Model");      
             // DEBUG: Afficher les erreurs ModelState
             if (!ModelState.IsValid)
             {
@@ -95,6 +97,9 @@ namespace OCR_05_Express_Voiture.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
+                ModelState.Remove("ImagePath");
+            ModelState.Remove("Brand");
+            ModelState.Remove("Model");
             {
                 return NotFound();
             }

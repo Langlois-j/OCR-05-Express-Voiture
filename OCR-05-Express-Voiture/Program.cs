@@ -68,3 +68,5 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+// pour rendre le programme accessible aux tests d'intégration DotNet6 et +
+public partial class Program { }

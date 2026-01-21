@@ -1,4 +1,4 @@
-@model OCR_05_Express_Voiture.Models.Vue.CarVueModel
+@model OCR_05_Express_Voiture.Models.Entities.Car
 
 @{
     ViewData["Title"] = "Ajouter une voiture";
@@ -23,7 +23,7 @@
 
         <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <!-- Marque -->
+           @*  <!-- Marque -->
             <div class="form-group">
                 <label asp-for="CarBrandId" class="control-label">Marque</label>
                 <select asp-for="CarBrandId" id="brandSelect" class="form-control" asp-items="ViewBag.CarBrandId">
@@ -35,8 +35,25 @@
             <!-- Modèle -->
             <div class="form-group">
                 <label asp-for="CarModelId" class="control-label">Modèle</label>
-                <select asp-for="CarModelId" id="modelSelect" class="form-control" disabled>
+                <select asp-for="CarModelId" id="modelSelect" class="form-control">
                     <option value="">-- Sélectionnez d'abord une marque --</option>
+                </select>
+                <span asp-validation-for="CarModelId" class="form-validation"></span>
+            </div> *@
+
+            <!-- Marque -->
+            <div class="form-group">
+                <label asp-for="CarBrandId" class="control-label">Marque</label>
+                <select asp-for="CarBrandId" class="form-control" asp-items="ViewBag.CarBrandId">
+                    <option value="">-- Sélectionnez une marque --</option>
+                </select>
+                <span asp-validation-for="CarBrandId" class="form-validation"></span>
+            </div>
+            <!-- Modèle -->
+            <div class="form-group">
+                <label asp-for="CarModelId" class="control-label">Modèle</label>
+                <select asp-for="CarModelId" class="form-control" asp-items="ViewBag.CarModelId">
+                    <option value="">-- Sélectionnez un modèle --</option>
                 </select>
                 <span asp-validation-for="CarModelId" class="form-validation"></span>
             </div>
@@ -117,7 +134,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
+@* 
     <script>
         $(document).ready(function () {
             // Quand on change la marque
@@ -169,7 +186,7 @@
                 }
             });
         });
-    </script>
+    </script> *@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 </body>
 </html>

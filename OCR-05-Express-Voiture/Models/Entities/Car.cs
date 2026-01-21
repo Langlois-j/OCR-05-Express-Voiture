@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 namespace OCR_05_Express_Voiture.Models.Entities
 {
     public class Car
@@ -14,12 +15,12 @@ namespace OCR_05_Express_Voiture.Models.Entities
         [Required(
            ErrorMessage = "Constructeur nécéssaire.")]
         public int CarBrandId { get; set; }
-        public virtual CarBrand Brand { get; set; } = null!;
+        public virtual CarBrand? Brand { get; set; } = null!;
             [Required(
         ErrorMessage = "Model nécéssaire.")]
 
         public int CarModelId { get; set; }
-        public virtual CarModel Model { get; set; } = null!;
+        public virtual CarModel? Model { get; set; } = null!;
 
         public string? TrimLevel { get; set; }
         [Required(
