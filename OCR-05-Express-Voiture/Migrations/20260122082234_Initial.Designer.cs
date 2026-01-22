@@ -12,8 +12,8 @@ using OCR_05_Express_Voiture.Data;
 namespace OCR_05_Express_Voiture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260121162742_MajCar-20260121")]
-    partial class MajCar20260121
+    [Migration("20260122082234_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -238,12 +238,6 @@ namespace OCR_05_Express_Voiture.Migrations
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CarBrandId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CarModelId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ConstructionYear")
                         .HasColumnType("int");
 
@@ -254,6 +248,9 @@ namespace OCR_05_Express_Voiture.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Mileage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ModelId")
                         .HasColumnType("int");
 
                     b.Property<double>("RepairAmount")
@@ -276,7 +273,7 @@ namespace OCR_05_Express_Voiture.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.HasIndex("CarBrandId");
+                    b.HasIndex("ModelId");
 
                     b.ToTable("Car");
                 });
@@ -482,12 +479,12 @@ namespace OCR_05_Express_Voiture.Migrations
                     b.HasOne("OCR_05_Express_Voiture.Models.Entities.CarBrand", "Brand")
                         .WithMany()
                         .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("OCR_05_Express_Voiture.Models.Entities.CarModel", "Model")
                         .WithMany()
-                        .HasForeignKey("CarBrandId")
+                        .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

@@ -235,12 +235,6 @@ namespace OCR_05_Express_Voiture.Migrations
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CarBrandId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CarModelId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ConstructionYear")
                         .HasColumnType("int");
 
@@ -251,6 +245,9 @@ namespace OCR_05_Express_Voiture.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Mileage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ModelId")
                         .HasColumnType("int");
 
                     b.Property<double>("RepairAmount")
@@ -273,7 +270,7 @@ namespace OCR_05_Express_Voiture.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.HasIndex("CarBrandId");
+                    b.HasIndex("ModelId");
 
                     b.ToTable("Car");
                 });
@@ -479,12 +476,12 @@ namespace OCR_05_Express_Voiture.Migrations
                     b.HasOne("OCR_05_Express_Voiture.Models.Entities.CarBrand", "Brand")
                         .WithMany()
                         .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("OCR_05_Express_Voiture.Models.Entities.CarModel", "Model")
                         .WithMany()
-                        .HasForeignKey("CarBrandId")
+                        .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

@@ -198,9 +198,8 @@ namespace OCR_05_Express_Voiture.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VinCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CarBrandId = table.Column<int>(type: "int", nullable: false),
                     BrandId = table.Column<int>(type: "int", nullable: false),
-                    CarModelId = table.Column<int>(type: "int", nullable: false),
+                    ModelId = table.Column<int>(type: "int", nullable: false),
                     TrimLevel = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConstructionYear = table.Column<int>(type: "int", nullable: false),
                     Mileage = table.Column<int>(type: "int", nullable: false),
@@ -218,10 +217,10 @@ namespace OCR_05_Express_Voiture.Migrations
                         column: x => x.BrandId,
                         principalTable: "CarBrand",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Car_CarModel_CarBrandId",
-                        column: x => x.CarBrandId,
+                        name: "FK_Car_CarModel_ModelId",
+                        column: x => x.ModelId,
                         principalTable: "CarModel",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -304,9 +303,9 @@ namespace OCR_05_Express_Voiture.Migrations
                 column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Car_CarBrandId",
+                name: "IX_Car_ModelId",
                 table: "Car",
-                column: "CarBrandId");
+                column: "ModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CarModel_CarBrandId",

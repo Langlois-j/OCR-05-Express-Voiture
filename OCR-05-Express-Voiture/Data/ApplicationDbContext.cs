@@ -28,24 +28,23 @@ namespace OCR_05_Express_Voiture.Data
         {
             base.OnModelCreating(builder);
 
-            // gestion de la suppression en cascade entre CarBrand et CarModel
-        //    builder.Entity<Car>()
-        //.HasOne(c => c.Model)
-        //.WithMany()
-        //.HasForeignKey(c => c.CarModelId)
-        //.OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Car>()
+        .HasOne(c => c.Brand)
+        .WithMany()
+        .HasForeignKey(c => c.BrandId)
+        .OnDelete(DeleteBehavior.Restrict);
 
-//            builder.Entity<Car>()
-//.HasOne(c => c.Model)
-//.WithMany()
-//.HasForeignKey(c => c.CarBrandId)
-//.OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Car>()
+                .HasOne(c => c.Model)
+                .WithMany()
+                .HasForeignKey(c => c.ModelId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<CarModel>()
-.HasOne(c => c.CarBrand)
-.WithMany()
-.HasForeignKey(c => c.CarBrandId)
-.OnDelete(DeleteBehavior.Restrict);
+                .HasOne(c => c.CarBrand)
+                .WithMany()
+                .HasForeignKey(c => c.CarBrandId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
 

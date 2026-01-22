@@ -43,19 +43,20 @@
 
             <!-- Marque -->
             <div class="form-group">
-                <label asp-for="CarBrandId" class="control-label">Marque</label>
-                <select asp-for="CarBrandId" class="form-control" asp-items="ViewBag.CarBrandId">
+                <label asp-for="BrandId" class="control-label">Marque *</label>
+                <select asp-for="BrandId" id="BrandId" class="form-control" asp-items="ViewBag.BrandId" required>
                     <option value="">-- Sélectionnez une marque --</option>
                 </select>
-                <span asp-validation-for="CarBrandId" class="form-validation"></span>
+                <span asp-validation-for="BrandId" class="form-validation"></span>
             </div>
+            
             <!-- Modèle -->
             <div class="form-group">
-                <label asp-for="CarModelId" class="control-label">Modèle</label>
-                <select asp-for="CarModelId" class="form-control" asp-items="ViewBag.CarModelId">
+                <label asp-for="ModelId" class="control-label">Modèle *</label>
+                <select asp-for="ModelId" class="form-control" asp-items="ViewBag.ModelId" required>
                     <option value="">-- Sélectionnez un modèle --</option>
                 </select>
-                <span asp-validation-for="CarModelId" class="form-validation"></span>
+                <span asp-validation-for="ModelId" class="form-validation"></span>
             </div>
 
             <!-- Finition -->
@@ -134,13 +135,13 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-@* 
+
     <script>
         $(document).ready(function () {
             // Quand on change la marque
-            $('#brandSelect').change(function () {
+            $('#BrandId').change(function () {
                 var brandId = $(this).val();
-                var modelSelect = $('#modelSelect');
+                var modelSelect = $('#ModelId');
 
                 // Réinitialiser la liste des modèles
                 modelSelect.empty();
@@ -186,7 +187,7 @@
                 }
             });
         });
-    </script> *@
+    </script> 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 </body>
 </html>

@@ -20,7 +20,6 @@ namespace OCR_05_Express_Voiture.Controllers
         {
             var applicationDbContext = _context.Car.Include(c => c.Brand).Include(c => c.Model);
             return View(await applicationDbContext.ToListAsync());
-            //return View(await _context.Car.ToListAsync());
         }
 
         // GET: Cars/Details/5
@@ -46,22 +45,20 @@ namespace OCR_05_Express_Voiture.Controllers
         // GET: Cars/Create
         public IActionResult Create()
         {
-            ViewData["CarBrandId"] = new SelectList(_context.CarBrand, "Id", "Name");
-            ViewData["CarModelId"] = new SelectList(_context.CarModel, "Id", "Name");
+            ViewData["BrandId"] = new SelectList(_context.CarBrand, "Id", "Name");
+            ViewData["ModelId"] = new SelectList(_context.CarModel, "Id", "Name");
             return View();
         }
 
         // POST: Cars/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,VinCode,CarBrandId,CarModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath,RepairDescription")] Car car)
+        public async Task<IActionResult> Create([Bind("Id,VinCode,BrandId,ModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath,RepairDescription")] Car car)
         {
             ModelState.Remove("ImagePath");
             ModelState.Remove("Brand");      
             ModelState.Remove("Model");      
-            // DEBUG: Afficher les erreurs ModelState
+            
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors);
@@ -88,8 +85,8 @@ namespace OCR_05_Express_Voiture.Controllers
                 }
             }
 
-            ViewData["CarBrandId"] = new SelectList(_context.CarBrand, "Id", "Name", car.CarBrandId);
-            ViewData["CarModelId"] = new SelectList(_context.CarModel, "Id", "Name", car.CarModelId);
+            ViewData["BrandId"] = new SelectList(_context.CarBrand, "Id", "Name", car.BrandId);
+            ViewData["ModelId"] = new SelectList(_context.CarModel, "Id", "Name", car.ModelId);
             return View(car);
         }
 
@@ -97,9 +94,6 @@ namespace OCR_05_Express_Voiture.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-                ModelState.Remove("ImagePath");
-            ModelState.Remove("Brand");
-            ModelState.Remove("Model");
             {
                 return NotFound();
             }
@@ -109,22 +103,24 @@ namespace OCR_05_Express_Voiture.Controllers
             {
                 return NotFound();
             }
-            ViewData["CarBrandId"] = new SelectList(_context.CarBrand, "Id", "Name", car.CarBrandId);
-            ViewData["CarModelId"] = new SelectList(_context.CarModel, "Id", "Name", car.CarModelId);
+            ViewData["BrandId"] = new SelectList(_context.CarBrand, "Id", "Name", car.BrandId);
+            ViewData["ModelId"] = new SelectList(_context.CarModel, "Id", "Name", car.ModelId);
             return View(car);
         }
 
         // POST: Cars/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,VinCode,CarBrandId,CarModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath,RepairDescription")] Car car)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,VinCode,BrandId,ModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath,RepairDescription")] Car car)
         {
             if (id != car.Id)
             {
                 return NotFound();
             }
+
+            ModelState.Remove("ImagePath");
+            ModelState.Remove("Brand");      
+            ModelState.Remove("Model");
 
             if (ModelState.IsValid)
             {
@@ -146,8 +142,8 @@ namespace OCR_05_Express_Voiture.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CarBrandId"] = new SelectList(_context.CarBrand, "Id", "Name", car.CarBrandId);
-            ViewData["CarModelId"] = new SelectList(_context.CarModel, "Id", "Name", car.CarModelId);
+            ViewData["BrandId"] = new SelectList(_context.CarBrand, "Id", "Name", car.BrandId);
+            ViewData["ModelId"] = new SelectList(_context.CarModel, "Id", "Name", car.ModelId);
             return View(car);
         }
 
@@ -190,6 +186,7 @@ namespace OCR_05_Express_Voiture.Controllers
         {
             return _context.Car.Any(e => e.Id == id);
         }
+
         // Méthode AJAX pour récupérer les modèles selon la marque
         [HttpGet]
         public JsonResult GetModelsByBrand(int brandId)
@@ -199,7 +196,7 @@ namespace OCR_05_Express_Voiture.Controllers
                 .Select(m => new
                 {
                     id = m.Id,
-                    name = m.Name // Ajustez selon le nom de votre propriété
+                    name = m.Name
                 })
                 .ToList();
 
