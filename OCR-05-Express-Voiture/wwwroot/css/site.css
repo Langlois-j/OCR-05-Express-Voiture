@@ -35,6 +35,8 @@
 
 /* 5. Typographie */
 @import url('typography.css');
+/*element visuel*/
+@import url('ruban.css');
 
 /* 6. Responsive - DOIT être en dernier */
 @import url('responsive.css');

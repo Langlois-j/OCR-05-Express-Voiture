@@ -45,9 +45,10 @@ namespace OCR_05_Express_Voiture.Controllers
         // GET: Cars/Create
         public IActionResult Create()
         {
+            var car = new Car();
             ViewData["BrandId"] = new SelectList(_context.CarBrand, "Id", "Name");
             ViewData["ModelId"] = new SelectList(_context.CarModel, "Id", "Name");
-            return View();
+            return View("Upsert", car);  // ✅ Utilise Upsert.cshtml
         }
 
         // POST: Cars/Create
@@ -105,7 +106,7 @@ namespace OCR_05_Express_Voiture.Controllers
             }
             ViewData["BrandId"] = new SelectList(_context.CarBrand, "Id", "Name", car.BrandId);
             ViewData["ModelId"] = new SelectList(_context.CarModel, "Id", "Name", car.ModelId);
-            return View(car);
+            return View("Upsert", car);  // ✅ Utilise Upsert.cshtml
         }
 
         // POST: Cars/Edit/5

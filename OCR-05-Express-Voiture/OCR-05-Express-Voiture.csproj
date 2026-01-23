@@ -24,6 +24,8 @@
 
   <ItemGroup>
     <Folder Include="Models\Vue\" />
+    <Folder Include="wwwroot\img\site\" />
+    <Folder Include="wwwroot\img\user\" />
   </ItemGroup>
 
 </Project>
