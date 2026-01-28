@@ -6,7 +6,7 @@ using OCR_05_Express_Voiture.Data;
 using OCR_05_Express_Voiture.Models.Entities;
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace OCR_05_Express_Voiture_Test.Integration
+namespace OCR_05_Express_Voiture_Test.configuratiion
 {
     /// <summary>
     /// Classe qui simule l'application web pour les tests

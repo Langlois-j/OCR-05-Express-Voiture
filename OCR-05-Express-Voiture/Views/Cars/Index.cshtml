@@ -35,12 +35,13 @@
             <div class="cars-grid">
                 @foreach (var car in Model)
                 {
-                    <div class="car-card">
-                        <!-- Car Image Container -->
-                        <div class="car-image-container">
+
                             <!-- Sell Corner Badge -->
                             @if (SignInManager.IsSignedIn(User))
                             {
+                        <div class="car-card">
+                            <!-- Car Image Container -->
+                            <div class="car-image-container">
                                 <img src="@(string.IsNullOrEmpty(car.ImagePath) ? "/img/site/Photo-Non-Dispo.png" : car.ImagePath)"
                                      alt="@car.Brand?.Name @car.Model?.Name"
                                      class="car-image" />
@@ -52,55 +53,97 @@
                                     {
                                         <div class="AdminCorner">Historique</div>
                                     }
+                            </div>
+
+                            <!-- Car Info -->
+                            <div class="car-info">
+                                <div class="car-price">
+                                    Prix de vente: @car.RepairAmount.ToString("C2")
+                                </div>
+
+                                <div class="car-details">
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Année:</span> @car.ConstructionYear
+                                    </div>
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Marque:</span>  @car.Brand?.Name
+                                    </div>
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Modèle:</span>  @car.Model?.Name
+                                    </div>
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Finition:</span> @(car.TrimLevel ?? "Non spécifiée")
+                                    </div>
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Kilométrage:</span> @car.Mileage km
+                                    </div>
+                                </div>
+
+                                <!-- Actions -->
+                                <div class="car-actions">
+                                    <a href="/cars/details/@car.Id" class="btn-details">Voir détails</a>
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        <a href="/cars/edit/@car.Id" class="btn-details" style="background-color: #6c757d;">Modifier</a>
+                                        <a href="/cars/delete/@car.Id" class="btn-delete">Supprimer</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
                                 }
-                            else if (car.ForSell)
+                                else if (car.ForSell)
                                 {
-                                <img src="@(string.IsNullOrEmpty(car.ImagePath) ? "/img/site/Photo-Non-Dispo.png" : car.ImagePath)"
+                                <div class="car-card">
+                                    <!-- Car Image Container -->
+                                    <div class="car-image-container">
+                                 
+                                    <img src="@(string.IsNullOrEmpty(car.ImagePath) ? "/img/site/Photo-Non-Dispo.png" : car.ImagePath)"
                                      alt="@car.Brand?.Name @car.Model?.Name"
                                      class="car-image" />
                                 @if (car.Sold)
                                 {
                                     <div class="SellCorner">Vendu</div>
                                 }
+                            </div>
+
+                            <!-- Car Info -->
+                            <div class="car-info">
+                                <div class="car-price">
+                                    Prix de vente: @car.RepairAmount.ToString("C2")
+                                </div>
+
+                                <div class="car-details">
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Année:</span> @car.ConstructionYear
+                                    </div>
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Marque:</span>  @car.Brand?.Name
+                                    </div>
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Modèle:</span>  @car.Model?.Name
+                                    </div>
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Finition:</span> @(car.TrimLevel ?? "Non spécifiée")
+                                    </div>
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Kilométrage:</span> @car.Mileage km
+                                    </div>
+                                </div>
+
+                                <!-- Actions -->
+                                <div class="car-actions">
+                                    <a href="/cars/details/@car.Id" class="btn-details">Voir détails</a>
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        <a href="/cars/edit/@car.Id" class="btn-details" style="background-color: #6c757d;">Modifier</a>
+                                        <a href="/cars/delete/@car.Id" class="btn-delete">Supprimer</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
                                 }
 
-                        </div>
-                       
-                        <!-- Car Info -->
-                        <div class="car-info">
-                            <div class="car-price">
-                                Prix de vente: @car.RepairAmount.ToString("C2")
-                            </div>
-
-                            <div class="car-details">
-                                <div class="car-details-item">
-                                    <span class="car-details-label">Année:</span> @car.ConstructionYear
-                                </div>
-                                <div class="car-details-item">
-                                    <span class="car-details-label">Marque:</span>  @car.Brand?.Name 
-                                </div>
-                                <div class="car-details-item">
-                                    <span class="car-details-label">Modèle:</span>  @car.Model?.Name 
-                                </div>
-                                <div class="car-details-item">
-                                    <span class="car-details-label">Finition:</span> @(car.TrimLevel ?? "Non spécifiée")
-                                </div>
-                                <div class="car-details-item">
-                                    <span class="car-details-label">Kilométrage:</span> @car.Mileage km
-                                </div>
-                            </div>
-
-                            <!-- Actions -->
-                            <div class="car-actions">
-                                <a href="/cars/details/@car.Id" class="btn-details">Voir détails</a>
-                                @if (SignInManager.IsSignedIn(User))
-                                {
-                                    <a href="/cars/edit/@car.Id" class="btn-details" style="background-color: #6c757d;">Modifier</a>
-                                    <a href="/cars/delete/@car.Id" class="btn-delete">Supprimer</a>
-                                }
-                            </div>
-                        </div>
-                    </div>
+                        
                 }
             </div>
         }
