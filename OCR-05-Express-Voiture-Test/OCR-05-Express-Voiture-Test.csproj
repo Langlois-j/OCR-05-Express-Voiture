@@ -7,6 +7,7 @@
 		<Nullable>enable</Nullable>
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
+		<UserSecretsId>aspnet-OCR_05_Express_Voiture-3a5b8b12-e192-43e7-9c58-a80497cd33f6</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>

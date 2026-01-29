@@ -6,14 +6,9 @@ using OCR_05_Express_Voiture.Models.Entities;
 
 namespace OCR_05_Express_Voiture.Controllers
 {
-    public class CarsController : Controller
+    public class CarsController(ApplicationDbContext context) : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public CarsController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        private readonly ApplicationDbContext _context = context;
 
         // GET: Cars
         public async Task<IActionResult> Index()
@@ -25,7 +20,7 @@ namespace OCR_05_Express_Voiture.Controllers
         // GET: Cars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id is null)
             {
                 return NotFound();
             }
@@ -34,7 +29,7 @@ namespace OCR_05_Express_Voiture.Controllers
                 .Include(c => c.Brand)
                 .Include(c => c.Model)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (car == null)
+            if (car is null)
             {
                 return NotFound();
             }

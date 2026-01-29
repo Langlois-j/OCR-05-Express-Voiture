@@ -32,7 +32,7 @@ namespace OCR_05_Express_Voiture.Models.Repositories
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
                 return false;
             }
@@ -46,7 +46,7 @@ namespace OCR_05_Express_Voiture.Models.Repositories
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
                 return false;
             }
@@ -57,14 +57,14 @@ namespace OCR_05_Express_Voiture.Models.Repositories
             var entity = await GetByIdAsync(id);
             if (entity is not null)
             {
-                bool SaveStatut;
+                
                 _dbSet.Remove(entity);
                 try
                 {
                     await _context.SaveChangesAsync();
                     return true;
                 }
-                catch (DbUpdateException ex)
+                catch (DbUpdateException)
                 {
                     return false;
                 }
