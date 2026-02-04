@@ -4,6 +4,18 @@
 @inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Nos voitures";
+   
+    bool isAdmin = false;
+
+    // Si l'utilisateur est connecté, vérifier s'il est admin
+    if (SignInManager.IsSignedIn(User))
+    {
+        var currentUser = await UserManager.GetUserAsync(User);
+        if (currentUser != null && await UserManager.IsInRoleAsync(currentUser, "Admin"))
+        {
+            isAdmin = true;
+        }
+    }
 }
 
 <!DOCTYPE html>
@@ -35,10 +47,9 @@
             <div class="cars-grid">
                 @foreach (var car in Model)
                 {
-
-                            <!-- Sell Corner Badge -->
-                            @if (SignInManager.IsSignedIn(User))
-                            {
+                    <!-- Afficher la voiture si l'admin la voit, ou si elle est en vente -->
+                    @if (isAdmin || car.ForSell)
+                    {
                         <div class="car-card">
                             <!-- Car Image Container -->
                             <div class="car-image-container">
@@ -49,60 +60,9 @@
                                 {
                                     <div class="SellCorner">Vendu</div>
                                 }
-                                @if (!car.ForSell)
-                                    {
-                                        <div class="AdminCorner">Historique</div>
-                                    }
-                            </div>
-
-                            <!-- Car Info -->
-                            <div class="car-info">
-                                <div class="car-price">
-                                    Prix de vente: @car.RepairAmount.ToString("C2")
-                                </div>
-
-                                <div class="car-details">
-                                    <div class="car-details-item">
-                                        <span class="car-details-label">Année:</span> @car.ConstructionYear
-                                    </div>
-                                    <div class="car-details-item">
-                                        <span class="car-details-label">Marque:</span>  @car.Brand?.Name
-                                    </div>
-                                    <div class="car-details-item">
-                                        <span class="car-details-label">Modèle:</span>  @car.Model?.Name
-                                    </div>
-                                    <div class="car-details-item">
-                                        <span class="car-details-label">Finition:</span> @(car.TrimLevel ?? "Non spécifiée")
-                                    </div>
-                                    <div class="car-details-item">
-                                        <span class="car-details-label">Kilométrage:</span> @car.Mileage km
-                                    </div>
-                                </div>
-
-                                <!-- Actions -->
-                                <div class="car-actions">
-                                    <a href="/cars/details/@car.Id" class="btn-details">Voir détails</a>
-                                    @if (SignInManager.IsSignedIn(User))
-                                    {
-                                        <a href="/cars/edit/@car.Id" class="btn-details" style="background-color: #6c757d;">Modifier</a>
-                                        <a href="/cars/delete/@car.Id" class="btn-delete">Supprimer</a>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                                }
-                                else if (car.ForSell)
+                                @if (isAdmin && !car.ForSell)
                                 {
-                                <div class="car-card">
-                                    <!-- Car Image Container -->
-                                    <div class="car-image-container">
-                                 
-                                    <img src="@(string.IsNullOrEmpty(car.ImagePath) ? "/img/site/Photo-Non-Dispo.png" : car.ImagePath)"
-                                     alt="@car.Brand?.Name @car.Model?.Name"
-                                     class="car-image" />
-                                @if (car.Sold)
-                                {
-                                    <div class="SellCorner">Vendu</div>
+                                    <div class="AdminCorner">Historique</div>
                                 }
                             </div>
 
@@ -133,7 +93,7 @@
                                 <!-- Actions -->
                                 <div class="car-actions">
                                     <a href="/cars/details/@car.Id" class="btn-details">Voir détails</a>
-                                    @if (SignInManager.IsSignedIn(User))
+                                    @if (isAdmin || SignInManager.IsSignedIn(User))
                                     {
                                         <a href="/cars/edit/@car.Id" class="btn-details" style="background-color: #6c757d;">Modifier</a>
                                         <a href="/cars/delete/@car.Id" class="btn-delete">Supprimer</a>
@@ -141,9 +101,7 @@
                                 </div>
                             </div>
                         </div>
-                                }
-
-                        
+                    }
                 }
             </div>
         }

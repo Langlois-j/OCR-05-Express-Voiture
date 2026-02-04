@@ -1,24 +1,42 @@
 ﻿@model OCR_05_Express_Voiture.Models.Entities.CarBrand
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Détails de la marque";
 }
 
-<h1>Details</h1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Page Title -->
+        <h1 class="page-title">@ViewData["Title"]</h1>
 
-<div>
-    <h4>CarBrand</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+        <div class="car-card" style="max-width: 600px;">
+            <div class="car-info">
+                <div class="car-price">
+                    @Model.Name
+                </div>
+
+                <!-- Actions -->
+                <div class="car-actions">
+                    <a href="/carbrands/edit/@Model.Id" class="btn-details" style="background-color: #6c757d;">Modifier</a>
+                    <a href="/carbrands/delete/@Model.Id" class="btn-delete">Supprimer</a>
+                </div>
+            </div>
+        </div>
+
+        <a href="/carbrands" class="back-link">Retour à la liste</a>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
