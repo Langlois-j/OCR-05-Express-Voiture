@@ -23,7 +23,7 @@
 
         <form asp-action="@(isEdit ? "Edit" : "Create")" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+
             @if (isEdit)
             {
                 <input type="hidden" asp-for="Id" />
@@ -37,7 +37,7 @@
                 </select>
                 <span asp-validation-for="BrandId" class="form-validation"></span>
             </div>
-            
+
             <!-- Modèle -->
             <div class="form-group">
                 <label asp-for="ModelId" class="control-label">Modèle *</label>
@@ -148,12 +148,12 @@
                                     var option = $('<option></option>')
                                         .val(model.id)
                                         .text(model.name);
-                                    
+
                                     // ✅ Pré-sélectionne la valeur si c'est une édition
                                     if (model.id == selectedModelId) {
                                         option.attr('selected', 'selected');
                                     }
-                                    
+
                                     modelSelect.append(option);
                                 });
                                 modelSelect.prop('disabled', false);
@@ -176,7 +176,7 @@
             // ✅ CHARGE LES MODÈLES AU CHARGEMENT DE LA PAGE
             var initialBrandId = $('#BrandId').val();
             var initialModelId = $('#ModelId').val();  // ✅ Récupère la valeur du ModelId
-            
+
             if (initialBrandId) {
                 loadModels(initialBrandId, initialModelId);  // ✅ Passe le ModelId
             }
@@ -188,6 +188,8 @@
             });
         });
     </script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 </body>
 </html>

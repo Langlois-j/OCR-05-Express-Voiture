@@ -52,9 +52,9 @@ namespace OCR_05_Express_Voiture.Controllers
         public async Task<IActionResult> Create([Bind("Id,VinCode,BrandId,ModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath,RepairDescription")] Car car)
         {
             ModelState.Remove("ImagePath");
-            ModelState.Remove("Brand");      
-            ModelState.Remove("Model");      
-            
+            ModelState.Remove("Brand");
+            ModelState.Remove("Model");
+
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors);
@@ -71,7 +71,17 @@ namespace OCR_05_Express_Voiture.Controllers
                     _context.Add(car);
                     await _context.SaveChangesAsync();
                     System.Diagnostics.Debug.WriteLine($"Voiture créée avec succès: {car.VinCode}");
-                    return RedirectToAction(nameof(Index));
+
+                    // Recharger la voiture avec les relations pour l'affichage
+                    var createdCar = await _context.Car
+                        .Include(c => c.Brand)
+                        .Include(c => c.Model)
+                        .FirstOrDefaultAsync(c => c.Id == car.Id);
+
+                    // Rediriger vers la page de confirmation
+                    ViewBag.Action = "Ajout";
+                    ViewBag.Message = "La voiture a été ajoutée avec succès.";
+                    return View("Confirmation", createdCar);
                 }
                 catch (Exception ex)
                 {
@@ -83,7 +93,7 @@ namespace OCR_05_Express_Voiture.Controllers
 
             ViewData["BrandId"] = new SelectList(_context.CarBrand, "Id", "Name", car.BrandId);
             ViewData["ModelId"] = new SelectList(_context.CarModel, "Id", "Name", car.ModelId);
-            return View(car);
+            return View("Upsert", car);
         }
 
         // GET: Cars/Edit/5
@@ -115,7 +125,7 @@ namespace OCR_05_Express_Voiture.Controllers
             }
 
             ModelState.Remove("ImagePath");
-            ModelState.Remove("Brand");      
+            ModelState.Remove("Brand");
             ModelState.Remove("Model");
 
             if (ModelState.IsValid)
@@ -124,6 +134,17 @@ namespace OCR_05_Express_Voiture.Controllers
                 {
                     _context.Update(car);
                     await _context.SaveChangesAsync();
+
+                    // Recharger la voiture avec les relations pour l'affichage
+                    var updatedCar = await _context.Car
+                        .Include(c => c.Brand)
+                        .Include(c => c.Model)
+                        .FirstOrDefaultAsync(c => c.Id == car.Id);
+
+                    // Rediriger vers la page de confirmation
+                    ViewBag.Action = "Modification";
+                    ViewBag.Message = "Les informations de la voiture ont été modifiées avec succès.";
+                    return View("Confirmation", updatedCar);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -136,11 +157,10 @@ namespace OCR_05_Express_Voiture.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             ViewData["BrandId"] = new SelectList(_context.CarBrand, "Id", "Name", car.BrandId);
             ViewData["ModelId"] = new SelectList(_context.CarModel, "Id", "Name", car.ModelId);
-            return View(car);
+            return View("Upsert", car);
         }
 
         // GET: Cars/Delete/5
@@ -168,13 +188,22 @@ namespace OCR_05_Express_Voiture.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var car = await _context.Car.FindAsync(id);
+            var car = await _context.Car
+                .Include(c => c.Brand)
+                .Include(c => c.Model)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
             if (car != null)
             {
                 _context.Car.Remove(car);
+                await _context.SaveChangesAsync();
+
+                // Rediriger vers la page de confirmation
+                ViewBag.Action = "Suppression";
+                ViewBag.Message = "La voiture a été supprimée avec succès.";
+                return View("Confirmation", car);
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

@@ -93,7 +93,7 @@
                                 <!-- Actions -->
                                 <div class="car-actions">
                                     <a href="/cars/details/@car.Id" class="btn-details">Voir détails</a>
-                                    @if (isAdmin || SignInManager.IsSignedIn(User))
+                                    @if (isAdmin)
                                     {
                                         <a href="/cars/edit/@car.Id" class="btn-details" style="background-color: #6c757d;">Modifier</a>
                                         <a href="/cars/delete/@car.Id" class="btn-delete">Supprimer</a>
@@ -109,7 +109,7 @@
         {
             <div class="empty-state">
                 <p>Aucune voiture disponible pour le moment.</p>
-                @if (SignInManager.IsSignedIn(User))
+                @if (isAdmin)
                 {
                     <a href="/cars/create" class="btn-add-car">Ajouter la première voiture</a>
                 }

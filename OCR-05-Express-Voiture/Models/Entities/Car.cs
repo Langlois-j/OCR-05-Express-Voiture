@@ -24,6 +24,7 @@ namespace OCR_05_Express_Voiture.Models.Entities
         public string? TrimLevel { get; set; }
         
         [Required(ErrorMessage = "Année de construction nécessaire.")]
+        [YearRange(1990)]
         public int ConstructionYear { get; set; }
 
         [Required(ErrorMessage = "Kilométrage nécessaire.")]
@@ -37,5 +38,46 @@ namespace OCR_05_Express_Voiture.Models.Entities
         
         public string? ImagePath { get; set; }
         public string? RepairDescription { get; set; }
+    }
+}
+public class YearRangeAttribute : ValidationAttribute
+{
+    private readonly int _minimumYear;
+
+    public YearRangeAttribute(int minimumYear)
+    {
+        _minimumYear = minimumYear;
+    }
+
+    protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
+    {
+        if (value == null)
+            return ValidationResult.Success!;
+
+        if (value is int year)
+        {
+            int currentYear = DateTime.Now.Year;
+
+            if (year < _minimumYear)
+            {
+                return new ValidationResult(
+                    ErrorMessage ?? $"L'année de construction doit être supérieure ou égale à {_minimumYear}."
+                );
+            }
+
+            if (year > currentYear)
+            {
+                return new ValidationResult(
+                    ErrorMessage ?? $"L'année de construction ne peut pas dépasser {currentYear}."
+                );
+            }
+        }
+
+        return ValidationResult.Success!;
+    }
+
+    public override string FormatErrorMessage(string name)
+    {
+        return string.Format(ErrorMessageString, name, _minimumYear, DateTime.Now.Year);
     }
 }

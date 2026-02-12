@@ -1,0 +1,30 @@
+﻿@model OCR_05_Express_Voiture.Models.Entities.Car
+
+@{
+    ViewData["Title"] = "Confirmation";
+    string action = ViewBag.Action as string ?? "Action";
+    string message = ViewBag.Message as string ?? "L'opération a été effectuée avec succès.";
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container-form" style="margin-top: 50px; max-width: 600px;">
+        <h1 class="page-title">@action réussie</h1>
+        <p class="page-subtitle">@message</p>
+        <div style="text-align: center; margin-top: 40px;">
+            <a asp-action="Index" class="back-link">Retour à la liste</a>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
