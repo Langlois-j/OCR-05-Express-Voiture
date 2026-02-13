@@ -57,7 +57,7 @@ namespace OCR_05_Express_Voiture.Models.Repositories
             var entity = await GetByIdAsync(id);
             if (entity is not null)
             {
-                
+
                 _dbSet.Remove(entity);
                 try
                 {

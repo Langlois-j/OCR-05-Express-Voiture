@@ -49,11 +49,45 @@ namespace OCR_05_Express_Voiture.Controllers
         // POST: Cars/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,VinCode,BrandId,ModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath,RepairDescription")] Car car)
+        public async Task<IActionResult> Create([Bind("Id,VinCode,BrandId,ModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath,RepairDescription")] Car car, IFormFile? imageFile)
         {
             ModelState.Remove("ImagePath");
             ModelState.Remove("Brand");
             ModelState.Remove("Model");
+
+            // Gestion de l'upload d'image
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                try
+                {
+                    // Créer le dossier s'il n'existe pas
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "user");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    // Générer un nom de fichier unique avec timestamp
+                    var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                    var extension = Path.GetExtension(imageFile.FileName);
+                    var fileName = $"{timestamp}{extension}";
+                    var filePath = Path.Combine(uploadsFolder, fileName);
+
+                    // Sauvegarder le fichier
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(stream);
+                    }
+
+                    // Enregistrer le chemin relatif dans la BDD
+                    car.ImagePath = $"/img/user/{fileName}";
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Erreur lors de l'upload de l'image: {ex.Message}");
+                    ModelState.AddModelError("ImagePath", "Erreur lors de l'upload de l'image.");
+                }
+            }
 
             if (!ModelState.IsValid)
             {
@@ -80,7 +114,7 @@ namespace OCR_05_Express_Voiture.Controllers
 
                     // Rediriger vers la page de confirmation
                     ViewBag.Action = "Ajout";
-                    ViewBag.Message = "La voiture a été ajoutée avec succès.";
+                    ViewBag.Message = "La voiture a été ajoutée avec succès à votre inventaire.";
                     return View("Confirmation", createdCar);
                 }
                 catch (Exception ex)
@@ -117,7 +151,7 @@ namespace OCR_05_Express_Voiture.Controllers
         // POST: Cars/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,VinCode,BrandId,ModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath,RepairDescription")] Car car)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,VinCode,BrandId,ModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath,RepairDescription")] Car car, IFormFile? imageFile)
         {
             if (id != car.Id)
             {
@@ -127,6 +161,57 @@ namespace OCR_05_Express_Voiture.Controllers
             ModelState.Remove("ImagePath");
             ModelState.Remove("Brand");
             ModelState.Remove("Model");
+
+            // Récupérer l'ancien chemin d'image si pas de nouvelle image
+            var existingCar = await _context.Car.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+            if (existingCar != null && imageFile == null)
+            {
+                car.ImagePath = existingCar.ImagePath;
+            }
+
+            // Gestion de l'upload d'image
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                try
+                {
+                    // Supprimer l'ancienne image si elle existe
+                    if (existingCar?.ImagePath != null && !string.IsNullOrEmpty(existingCar.ImagePath))
+                    {
+                        var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingCar.ImagePath.TrimStart('/'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    // Créer le dossier s'il n'existe pas
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "user");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    // Générer un nom de fichier unique avec timestamp
+                    var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                    var extension = Path.GetExtension(imageFile.FileName);
+                    var fileName = $"{timestamp}{extension}";
+                    var filePath = Path.Combine(uploadsFolder, fileName);
+
+                    // Sauvegarder le fichier
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(stream);
+                    }
+
+                    // Enregistrer le chemin relatif dans la BDD
+                    car.ImagePath = $"/img/user/{fileName}";
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Erreur lors de l'upload de l'image: {ex.Message}");
+                    ModelState.AddModelError("ImagePath", "Erreur lors de l'upload de l'image.");
+                }
+            }
 
             if (ModelState.IsValid)
             {
@@ -200,7 +285,7 @@ namespace OCR_05_Express_Voiture.Controllers
 
                 // Rediriger vers la page de confirmation
                 ViewBag.Action = "Suppression";
-                ViewBag.Message = "La voiture a été supprimée avec succès.";
+                ViewBag.Message = "La voiture a été supprimée avec succès de votre inventaire.";
                 return View("Confirmation", car);
             }
 

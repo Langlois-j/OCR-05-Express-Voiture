@@ -20,26 +20,35 @@
             <button type="submit">Accueil</button>
         </form>
     </li>
-@if (SignInManager.IsSignedIn(User))
-{
+    @if (SignInManager.IsSignedIn(User))
+    {
         <li class="nav-item">
             <form class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index">
                 <button type="submit">Mon Compte</button>
             </form>
         </li>
 
-    <li class="nav-item">
+        @if (isAdmin)
+        {
+            <li class="nav-item">
+                <form class="nav-link" asp-area="" asp-controller="Settings" asp-action="Index">
+                    <button type="submit">Paramètres</button>
+                </form>
+            </li>
+        }
+
+        <li class="nav-item">
             <form class="nav-link" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-             <button type="submit">Se déconnecter</button> 
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
+                <button type="submit">Se déconnecter</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
             <form class="nav-link" asp-area="Identity" asp-page="/Account/Login">
                 <button type="submit">Se connecter</button>
             </form>
-    </li>
-}
+        </li>
+    }
 </ul>

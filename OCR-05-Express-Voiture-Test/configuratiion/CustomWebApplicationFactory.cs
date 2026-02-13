@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using OCR_05_Express_Voiture.Data;
 using OCR_05_Express_Voiture.Models.Entities;
-using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace OCR_05_Express_Voiture_Test.configuratiion
 {
@@ -12,7 +11,7 @@ namespace OCR_05_Express_Voiture_Test.configuratiion
     /// Classe qui simule l'application web pour les tests
     /// Elle crée une base de données en mémoire (temporaire)
     /// </summary>
-    public class CustomWebApplicationFactory : WebApplicationFactory <Program>
+    public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {

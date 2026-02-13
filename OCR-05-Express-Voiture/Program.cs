@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // ✅ User Secrets sont chargés automatiquement en Development
 // Pas besoin de config supplémentaire - ils sont dans IConfiguration
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

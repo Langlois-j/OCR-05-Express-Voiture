@@ -1,19 +1,17 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using OCR_05_Express_Voiture.Data;
 using OCR_05_Express_Voiture.Models.Entities;
 using OCR_05_Express_Voiture_Test.configuratiion;
-using Xunit;
 
 namespace OCR_05_Express_Voiture_Test.Integration
 {
-  
+
     public class CarControllerTest : IClassFixture<CustomWebApplicationFactory>
     {
         private readonly CustomWebApplicationFactory _factory;
 
-       
+
         public CarControllerTest(CustomWebApplicationFactory factory)
         {
             _factory = factory;
@@ -26,14 +24,14 @@ namespace OCR_05_Express_Voiture_Test.Integration
         public async Task AddCarToDatabase()
         {
             // ARRANGE
-            
+
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var newCar = new Car
             {
                 VinCode = "TEST123456789ABCD",
-                BrandId = 1,     
-                ModelId = 1,     
+                BrandId = 1,
+                ModelId = 1,
                 TrimLevel = "Zen",
                 ConstructionYear = 2021,
                 Mileage = 25000,
@@ -48,18 +46,18 @@ namespace OCR_05_Express_Voiture_Test.Integration
             await context.SaveChangesAsync();
 
             // ASSERT 
-           
+
             var carInDb = await context.Car
                 .FirstOrDefaultAsync(c => c.VinCode == "TEST123456789ABCD");
 
             // Vérifications
-            Assert.NotNull(carInDb);                             
-            Assert.Equal("TEST123456789ABCD", carInDb.VinCode);  
-            Assert.Equal(1, carInDb.BrandId);                 
-            Assert.Equal(1, carInDb.ModelId);                 
-            Assert.Equal(25000, carInDb.Mileage);                
-            Assert.True(carInDb.ForSell);                        
-            Assert.False(carInDb.Sold);                          
+            Assert.NotNull(carInDb);
+            Assert.Equal("TEST123456789ABCD", carInDb.VinCode);
+            Assert.Equal(1, carInDb.BrandId);
+            Assert.Equal(1, carInDb.ModelId);
+            Assert.Equal(25000, carInDb.Mileage);
+            Assert.True(carInDb.ForSell);
+            Assert.False(carInDb.Sold);
         }
         [Fact]
         /// <summary>
@@ -71,7 +69,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-            
+
             var carToEdit = new Car
             {
                 VinCode = "EDIT-TEST-CAR-001",
@@ -89,7 +87,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
             context.Car.Add(carToEdit);
             await context.SaveChangesAsync();
 
-           
+
             var carFromDb = await context.Car
                 .FirstOrDefaultAsync(c => c.VinCode == "EDIT-TEST-CAR-001");
 
@@ -99,11 +97,11 @@ namespace OCR_05_Express_Voiture_Test.Integration
             // ACT - Modifier la voiture
             carFromDb.Mileage = 75000;
             carFromDb.BrandId = 2;
-            carFromDb.ModelId=3;
+            carFromDb.ModelId = 3;
             carFromDb.RepairAmount = 1500.00;
             carFromDb.TrimLevel = "Luxe";
             carFromDb.RepairDescription = "Texte Changer";
-            carFromDb.Sold = true;  
+            carFromDb.Sold = true;
             carFromDb.ForSell = false;
 
 
@@ -116,9 +114,9 @@ namespace OCR_05_Express_Voiture_Test.Integration
 
             Assert.NotNull(updatedCarInDb);
             Assert.Equal(originalId, updatedCarInDb.Id);
-      
-            Assert.Equal(carFromDb.Mileage ,updatedCarInDb.Mileage);
-            Assert.Equal(carFromDb.BrandId , updatedCarInDb.BrandId);
+
+            Assert.Equal(carFromDb.Mileage, updatedCarInDb.Mileage);
+            Assert.Equal(carFromDb.BrandId, updatedCarInDb.BrandId);
             Assert.Equal(carFromDb.ModelId, updatedCarInDb.ModelId);
             Assert.Equal(carFromDb.RepairAmount, updatedCarInDb.RepairAmount);
             Assert.Equal(carFromDb.TrimLevel, updatedCarInDb.TrimLevel);

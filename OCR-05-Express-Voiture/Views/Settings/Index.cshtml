@@ -1,0 +1,143 @@
+﻿@{
+    ViewData["Title"] = "Paramètres";
+    var brands = ViewBag.Brands as List<OCR_05_Express_Voiture.Models.Entities.CarBrand>;
+    var models = ViewBag.Models as List<OCR_05_Express_Voiture.Models.Entities.CarModel>;
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="page-title">Paramètres</h1>
+        <p class="page-subtitle">Gérer les marques et modèles de voitures</p>
+
+        @if (TempData["Success"] != null)
+        {
+            <div style="padding: 15px; margin-bottom: 20px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 4px;">
+                @TempData["Success"]
+            </div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div style="padding: 15px; margin-bottom: 20px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 4px;">
+                @TempData["Error"]
+            </div>
+        }
+
+        <!-- Section Marques -->
+        <div class="card" style="margin-bottom: 40px;">
+            <div class="card-body">
+                <h2 style="color: var(--primary-color); font-size: 24px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color);">
+                    🏭 Marques de voitures
+                </h2>
+
+                <form asp-action="AddBrand" method="post" style="display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap;">
+                    @Html.AntiForgeryToken()
+                    <input type="text" name="brandName" placeholder="Nom de la marque" required
+                           style="flex: 1; min-width: 200px; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 14px;" />
+                    <button type="submit">+ Ajouter une marque</button>
+                </form>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                    @if (brands != null && brands.Any())
+                    {
+                        @foreach (var brand in brands)
+                        {
+                            <div style="background: var(--light-gray); padding: 15px; border-radius: 4px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                                <div style="font-weight: 500; color: var(--text-color); font-size: 14px;">
+                                    @brand.Name
+                                </div>
+                                <form asp-action="DeleteBrand" method="post" style="margin: 0;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@brand.Id" />
+                                    <button type="submit" class="btn-delete" style="padding: 5px 15px; font-size: 12px;"
+                                            onclick="return confirm('Supprimer cette marque ?')">
+                                        Supprimer
+                                    </button>
+                                </form>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">Aucune marque enregistrée.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Modèles -->
+        <div class="card">
+            <div class="card-body">
+                <h2 style="color: var(--primary-color); font-size: 24px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color);">
+                    🚗 Modèles de voitures
+                </h2>
+
+                <form asp-action="AddModel" method="post" style="display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap;">
+                    @Html.AntiForgeryToken()
+                    <input type="text" name="modelName" placeholder="Nom du modèle" required
+                           style="flex: 1; min-width: 200px; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 14px;" />
+                    <select name="brandId" required
+                            style="flex: 1; min-width: 200px; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 14px;">
+                        <option value="">-- Sélectionnez une marque --</option>
+                        @if (brands != null)
+                        {
+                            @foreach (var brand in brands)
+                            {
+                                <option value="@brand.Id">@brand.Name</option>
+                            }
+                        }
+                    </select>
+                    <button type="submit">+ Ajouter un modèle</button>
+                </form>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                    @if (models != null && models.Any())
+                    {
+                        @foreach (var carModel in models)
+                        {
+                            <div style="background: var(--light-gray); padding: 15px; border-radius: 4px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 500; color: var(--text-color); font-size: 14px;">
+                                        @carModel.Name
+                                    </div>
+                                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">
+                                        @carModel.CarBrand?.Name
+                                    </div>
+                                </div>
+                                <form asp-action="DeleteModel" method="post" style="margin: 0;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@carModel.Id" />
+                                    <button type="submit" class="btn-delete" style="padding: 5px 15px; font-size: 12px;"
+                                            onclick="return confirm('Supprimer ce modèle ?')">
+                                        Supprimer
+                                    </button>
+                                </form>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">Aucun modèle enregistré.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="/" class="back-link">Retour à l'accueil</a>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

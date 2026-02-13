@@ -6,8 +6,8 @@ namespace OCR_05_Express_Voiture.Models.Repositories
 {
     public class CarBrandRepository : GenericRepository<CarBrand>, ICarBrandRepository
     {
-        private static List<CarBrand> _carbrand;
-        protected readonly DbSet<CarBrand> _dbSet;
+        private static List<CarBrand>? _carbrand;
+        protected new readonly DbSet<CarBrand> _dbSet;
 
         public CarBrandRepository(ApplicationDbContext context) : base(context)
         {

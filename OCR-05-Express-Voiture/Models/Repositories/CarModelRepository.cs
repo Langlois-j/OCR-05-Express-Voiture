@@ -6,7 +6,7 @@ namespace OCR_05_Express_Voiture.Models.Repositories
 {
     public class CarModelRepository : GenericRepository<CarModel>, ICarModelRepository
     {
-        protected readonly DbSet<CarModel> _dbSet;
+        protected new readonly DbSet<CarModel> _dbSet;
 
         public CarModelRepository(ApplicationDbContext context) : base(context)
         {

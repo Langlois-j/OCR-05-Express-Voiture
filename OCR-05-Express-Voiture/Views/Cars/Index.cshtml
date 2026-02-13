@@ -7,7 +7,7 @@
    
     bool isAdmin = false;
 
-    // Si l'utilisateur est connecté, vérifier s'il est admintryrt
+    // Si l'utilisateur est connecté, vérifier s'il est admin
     if (SignInManager.IsSignedIn(User))
     {
         var currentUser = await UserManager.GetUserAsync(User);
@@ -29,13 +29,13 @@
      
 </head>
 <body>
-    <!-- Main Content -->
+  
     <div class="main-container">
         <!-- Page Title -->
         <h1 class="page-title">Nos voitures</h1>
         @if (SignInManager.IsSignedIn(User))
         {
-            <!-- Button Section -->
+          
             <div class="button-section">
                 <a href="/cars/create" class="btn-add-car">+ Ajouter une voiture</a>
             </div>
@@ -51,7 +51,7 @@
                     @if (isAdmin || car.ForSell)
                     {
                         <div class="car-card">
-                            <!-- Car Image Container -->
+                            
                             <div class="car-image-container">
                                 <img src="@(string.IsNullOrEmpty(car.ImagePath) ? "/img/site/Photo-Non-Dispo.png" : car.ImagePath)"
                                      alt="@car.Brand?.Name @car.Model?.Name"
@@ -66,7 +66,7 @@
                                 }
                             </div>
 
-                            <!-- Car Info -->
+                           
                             <div class="car-info">
                                 <div class="car-price">
                                     Prix de vente: @car.RepairAmount.ToString("C2")
@@ -90,7 +90,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Actions -->
+                                
                                 <div class="car-actions">
                                     <a href="/cars/details/@car.Id" class="btn-details">Voir détails</a>
                                     @if (isAdmin)

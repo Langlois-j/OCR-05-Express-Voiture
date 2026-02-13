@@ -1,84 +1,153 @@
 ﻿@model OCR_05_Express_Voiture.Models.Entities.Car
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Détails de la voiture";
 }
 
-<h1>Details</h1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .details-container {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            margin-top: 30px;
+        }
 
-<div>
-    <h4>Car</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VinCode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VinCode)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModelId)
-        </dd>
-        <dt class = "col-sm-2">
-         @*    @Html.DisplayNameFor(model => model.Model) *@
-        </dt>
-        <dd class = "col-sm-10">
-          @*   @Html.DisplayFor(model => model.Model.Id) *@
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TrimLevel)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TrimLevel)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ConstructionYear)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ConstructionYear)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Mileage)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Mileage)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ForSell)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ForSell)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sold)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sold)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RepairAmount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RepairAmount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImagePath)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RepairDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RepairDescription)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+        .details-image {
+            flex: 0 0 auto;
+            max-width: 500px;
+        }
+
+            .details-image img {
+                width: 100%;
+                height: auto;
+                border-radius: 4px;
+                border: 1px solid var(--border-color);
+            }
+
+        .details-info {
+            flex: 1;
+        }
+
+        .info-section {
+            margin-bottom: 40px;
+        }
+
+            .info-section h2 {
+                font-size: 32px;
+                font-weight: 300;
+                color: var(--text-color);
+                margin-bottom: 30px;
+            }
+
+        .info-row {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+            .info-row:last-child {
+                border-bottom: none;
+            }
+
+        .info-label {
+            color: var(--text-muted);
+            font-size: 14px;
+            min-width: 150px;
+        }
+
+        .info-value {
+            color: var(--text-color);
+            font-size: 14px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <a href="/cars" class="back-link" style="display: inline-block; margin-bottom: 20px;">
+            ← Retour
+        </a>
+
+        <div class="details-container">
+            <!-- Image à gauche -->
+            <div class="details-image">
+                @if (Model?.ImagePath != null && !string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <img src="@Model.ImagePath" alt="@Model.Brand?.Name @Model.Model?.Name" />
+                }
+                else
+                {
+                    <img src="/img/site/Photo-Non-Dispo.png" alt="Pas d'image disponible" />
+                }
+            </div>
+
+            <!-- Informations à droite -->
+            <div class="details-info">
+                <div class="info-section">
+                    <h2>Prix de vente</h2>
+                    <div class="info-row">
+                        <div class="info-value" style="font-size: 24px; color: var(--primary-color);">
+                            @Model.RepairAmount.ToString("C")
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-row">
+                        <span class="info-label">Année</span>
+                        <span class="info-value">@Model.ConstructionYear</span>
+                    </div>
+
+                    <div class="info-row">
+                        <span class="info-label">Marque</span>
+                        <span class="info-value">@(Model.Brand?.Name ?? "Non spécifiée")</span>
+                    </div>
+
+                    <div class="info-row">
+                        <span class="info-label">Modèle</span>
+                        <span class="info-value">@(Model.Model?.Name ?? "Non spécifié")</span>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.TrimLevel))
+                    {
+                        <div class="info-row">
+                            <span class="info-label">Finition</span>
+                            <span class="info-value">@Model.TrimLevel</span>
+                        </div>
+                    }
+
+                    <div class="info-row">
+                        <span class="info-label">Kilométrage</span>
+                        <span class="info-value">@Model.Mileage.ToString("N0") km</span>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.RepairDescription))
+                    {
+                        <div class="info-row" style="flex-direction: column; align-items: flex-start;">
+                            <span class="info-label" style="margin-bottom: 10px;">Description des réparations</span>
+                            <span class="info-value" style="white-space: pre-wrap;">@Model.RepairDescription</span>
+                        </div>
+                    }
+                    <div class="info-row">
+                        <span class="info-label">Statut</span>
+                        <span class="info-value">@(Model.Sold ? "Vendue" : "Disponible")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
