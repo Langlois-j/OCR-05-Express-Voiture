@@ -22,8 +22,6 @@ Avant de pouvoir exécuter l'application Express Voiture, assurez-vous d'avoir l
 * **SQL Server** (LocalDB ou Express)
 
 ## Structure du projet
-
-* `Program.cs` : Le point d'entrée de l'application
 * `Controllers/` : Les contrôleurs de l'application pour la gestion des routes et des actions
 * `Models/` : Les modèles de données utilisés dans l'application
   * `Entities/` : Les entités de la base de données (Car, CarBrand, CarModel)
