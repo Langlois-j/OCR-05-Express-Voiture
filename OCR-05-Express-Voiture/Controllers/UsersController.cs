@@ -20,7 +20,7 @@ namespace OCR_05_Express_Voiture.Controllers
             return View(users);
         }
 
-        // GET: Users/Delete/5
+        // GET: Users/Delete/X
         public async Task<IActionResult> Delete(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -37,7 +37,7 @@ namespace OCR_05_Express_Voiture.Controllers
             return View(user);
         }
 
-        // POST: Users/DeleteConfirmed/5
+        // POST: Users/DeleteConfirmed/X
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

@@ -34,7 +34,7 @@ namespace OCR_05_Express_Voiture.Models.Entities
         public bool Sold { get; set; } = false;
 
         [Required(ErrorMessage = "Montant réparation nécessaire.")]
-        public double RepairAmount { get; set; }
+        public double SellPrice { get; set; }
 
         public string? ImagePath { get; set; }
         public string? RepairDescription { get; set; }

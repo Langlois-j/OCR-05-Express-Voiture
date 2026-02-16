@@ -17,12 +17,21 @@ namespace OCR_05_Express_Voiture_Test.Integration
         {
             _factory = factory;
         }
+        private async Task ResetDatabaseAsync()
+        {
+            using var scope = _factory.Services.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        #region Tests CarBrand
+            await context.Database.EnsureDeletedAsync();
+            await context.Database.EnsureCreatedAsync();
+            CustomWebApplicationFactory.SeedTestData(context);
+        }
+
 
         [Fact]
         public async Task AddBrand_ShouldSaveToDatabase()
         {
+            await ResetDatabaseAsync();
             // ARRANGE
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -44,6 +53,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
         [Fact]
         public async Task DeleteBrand_WithoutModels_ShouldSucceed()
         {
+            await ResetDatabaseAsync();
             // ARRANGE
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -69,6 +79,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
         [Fact]
         public async Task GetAllBrands_ShouldReturnAllBrands()
         {
+            await ResetDatabaseAsync();
             // ARRANGE
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -83,13 +94,14 @@ namespace OCR_05_Express_Voiture_Test.Integration
             Assert.Contains(brands, b => b.Name == "C3");
         }
 
-        #endregion
+      
 
         #region Tests CarModel
 
         [Fact]
         public async Task AddModel_ShouldSaveToDatabase()
         {
+            await ResetDatabaseAsync();
             // ARRANGE
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -116,6 +128,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
         [Fact]
         public async Task GetModelWithBrand_ShouldIncludeBrandRelation()
         {
+            await ResetDatabaseAsync();
             // ARRANGE
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -123,7 +136,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
             // ACT
             var modelWithBrand = await context.CarModel
                 .Include(m => m.CarBrand)
-                .FirstOrDefaultAsync(m => m.Id == 1);
+                .FirstOrDefaultAsync(m => m.Name == "C1M1");
 
             // ASSERT
             Assert.NotNull(modelWithBrand);
@@ -134,6 +147,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
         [Fact]
         public async Task DeleteModel_WithoutCars_ShouldSucceed()
         {
+            await ResetDatabaseAsync();
             // ARRANGE
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -168,6 +182,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
         [Fact]
         public async Task Brand_CannotBeDeleted_IfHasModels()
         {
+            await ResetDatabaseAsync();
             // ARRANGE
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -177,8 +192,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
             Assert.True(hasModels);
 
             // ACT & ASSERT
-            // Cette logique devrait être dans le contrôleur
-            // On vérifie juste qu'on peut détecter la présence de modèles
+          
             var modelsCount = await context.CarModel
                 .Where(m => m.CarBrandId == 1)
                 .CountAsync();
@@ -189,6 +203,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
         [Fact]
         public async Task Model_CannotBeDeleted_IfUsedByCars()
         {
+            await ResetDatabaseAsync();
             // ARRANGE
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -201,7 +216,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
                 ModelId = 1,
                 ConstructionYear = 2020,
                 Mileage = 10000,
-                RepairAmount = 500
+                SellPrice = 500
             };
 
             context.Car.Add(car);
@@ -215,6 +230,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
         [Fact]
         public async Task GetBrandsWithModelCount_ShouldReturnCorrectCounts()
         {
+            await ResetDatabaseAsync();
             // ARRANGE
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -233,7 +249,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
 
             var brand1 = brandsWithCounts.FirstOrDefault(b => b.Brand.Id == 1);
             Assert.NotNull(brand1);
-            Assert.Equal(2, brand1.ModelCount); // C1M1 et C1M2
+            Assert.Equal(2, brand1.ModelCount); 
         }
 
         #endregion

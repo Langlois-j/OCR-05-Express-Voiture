@@ -8,7 +8,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
 {
     /// <summary>
     /// Tests d'intégration complets pour le contrôleur Cars
-    /// Couvre les opérations CRUD de base et les scénarios avancés
+
     /// </summary>
     public class CarControllerTests : IClassFixture<CustomWebApplicationFactory>
     {
@@ -25,6 +25,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
 
             await context.Database.EnsureDeletedAsync();
             await context.Database.EnsureCreatedAsync();
+            CustomWebApplicationFactory.SeedTestData(context);
         }
 
 
@@ -49,7 +50,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
                 Mileage = 25000,
                 ForSell = true,
                 Sold = false,
-                RepairAmount = 500.00,
+                SellPrice = 500.00,
                 RepairDescription = "Révision 25000 km"
             };
 
@@ -92,7 +93,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
                 Mileage = 50000,
                 ForSell = true,
                 Sold = false,
-                RepairAmount = 1000.00,
+                SellPrice = 1000.00,
                 RepairDescription = "État moyen"
             };
 
@@ -109,7 +110,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
             carFromDb.Mileage = 75000;
             carFromDb.BrandId = 2;
             carFromDb.ModelId = 3;
-            carFromDb.RepairAmount = 1500.00;
+            carFromDb.SellPrice = 1500.00;
             carFromDb.TrimLevel = "Luxe";
             carFromDb.RepairDescription = "Texte Changé";
             carFromDb.Sold = true;
@@ -127,7 +128,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
             Assert.Equal(75000, updatedCarInDb.Mileage);
             Assert.Equal(2, updatedCarInDb.BrandId);
             Assert.Equal(3, updatedCarInDb.ModelId);
-            Assert.Equal(1500.00, updatedCarInDb.RepairAmount);
+            Assert.Equal(1500.00, updatedCarInDb.SellPrice);
             Assert.Equal("Luxe", updatedCarInDb.TrimLevel);
             Assert.Equal("Texte Changé", updatedCarInDb.RepairDescription);
             Assert.True(updatedCarInDb.Sold);
@@ -156,7 +157,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
                 Mileage = 100000,
                 ForSell = false,
                 Sold = true,
-                RepairAmount = 500.00,
+                SellPrice = 500.00,
                 RepairDescription = "À enlever"
             };
 
@@ -192,9 +193,9 @@ namespace OCR_05_Express_Voiture_Test.Integration
             // Ajouter plusieurs voitures
             var cars = new List<Car>
             {
-                new Car { VinCode = "CAR001", BrandId = 1, ModelId = 1, ConstructionYear = 2020, Mileage = 10000, RepairAmount = 500 },
-                new Car { VinCode = "CAR002", BrandId = 1, ModelId = 2, ConstructionYear = 2021, Mileage = 5000, RepairAmount = 300 },
-                new Car { VinCode = "CAR003", BrandId = 2, ModelId = 3, ConstructionYear = 2019, Mileage = 50000, RepairAmount = 1500 }
+                new Car { VinCode = "CAR001", BrandId = 1, ModelId = 1, ConstructionYear = 2020, Mileage = 10000, SellPrice = 500 },
+                new Car { VinCode = "CAR002", BrandId = 1, ModelId = 2, ConstructionYear = 2021, Mileage = 5000, SellPrice = 300 },
+                new Car { VinCode = "CAR003", BrandId = 2, ModelId = 3, ConstructionYear = 2019, Mileage = 50000, SellPrice = 1500 }
             };
 
             context.Car.AddRange(cars);
@@ -225,7 +226,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
                 ModelId = 1,
                 ConstructionYear = 2022,
                 Mileage = 15000,
-                RepairAmount = 800,
+                SellPrice = 800,
                 TrimLevel = "Sport"
             };
 
@@ -250,15 +251,16 @@ namespace OCR_05_Express_Voiture_Test.Integration
             // ARRANGE
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
+            var brand = await context.CarBrand.FirstAsync(b => b.Name == "C1");
+            var model = await context.CarModel.FirstAsync(m => m.Name == "C1M1");
             var car = new Car
             {
                 VinCode = "CAR-WITH-RELATIONS",
-                BrandId = 1,
-                ModelId = 1,
+                BrandId = brand.Id,
+                ModelId = model.Id,
                 ConstructionYear = 2020,
                 Mileage = 30000,
-                RepairAmount = 1200
+                SellPrice = 1200
             };
 
             context.Car.Add(car);
@@ -295,7 +297,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
                 ModelId = 1,
                 ConstructionYear = 2020,
                 Mileage = 10000,
-                RepairAmount = 500
+                SellPrice = 500
             };
 
             context.Car.Add(car);
@@ -330,7 +332,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
                 ModelId = 1,
                 ConstructionYear = 2021,
                 Mileage = 5000,
-                RepairAmount = 300,
+                SellPrice = 300,
                 ForSell = true,
                 Sold = false
             };
@@ -366,9 +368,9 @@ namespace OCR_05_Express_Voiture_Test.Integration
 
             var cars = new List<Car>
             {
-                new Car { VinCode = "BRAND1-CAR1", BrandId = 1, ModelId = 1, ConstructionYear = 2020, Mileage = 10000, RepairAmount = 500 },
-                new Car { VinCode = "BRAND1-CAR2", BrandId = 1, ModelId = 2, ConstructionYear = 2021, Mileage = 5000, RepairAmount = 300 },
-                new Car { VinCode = "BRAND2-CAR1", BrandId = 2, ModelId = 3, ConstructionYear = 2019, Mileage = 50000, RepairAmount = 1500 }
+                new Car { VinCode = "BRAND1-CAR1", BrandId = 1, ModelId = 1, ConstructionYear = 2020, Mileage = 10000, SellPrice = 500 },
+                new Car { VinCode = "BRAND1-CAR2", BrandId = 1, ModelId = 2, ConstructionYear = 2021, Mileage = 5000, SellPrice = 300 },
+                new Car { VinCode = "BRAND2-CAR1", BrandId = 2, ModelId = 3, ConstructionYear = 2019, Mileage = 50000, SellPrice = 1500 }
             };
 
             context.Car.AddRange(cars);
@@ -394,9 +396,9 @@ namespace OCR_05_Express_Voiture_Test.Integration
 
             var cars = new List<Car>
             {
-                new Car { VinCode = "FOR-SALE-1", BrandId = 1, ModelId = 1, ConstructionYear = 2020, Mileage = 10000, RepairAmount = 500, ForSell = true, Sold = false },
-                new Car { VinCode = "FOR-SALE-2", BrandId = 1, ModelId = 2, ConstructionYear = 2021, Mileage = 5000, RepairAmount = 300, ForSell = true, Sold = false },
-                new Car { VinCode = "SOLD-CAR", BrandId = 2, ModelId = 3, ConstructionYear = 2019, Mileage = 50000, RepairAmount = 1500, ForSell = false, Sold = true }
+                new Car { VinCode = "FOR-SALE-1", BrandId = 1, ModelId = 1, ConstructionYear = 2020, Mileage = 10000, SellPrice = 500, ForSell = true, Sold = false },
+                new Car { VinCode = "FOR-SALE-2", BrandId = 1, ModelId = 2, ConstructionYear = 2021, Mileage = 5000,  SellPrice = 300, ForSell = true, Sold = false },
+                new Car { VinCode = "SOLD-CAR", BrandId = 2, ModelId = 3, ConstructionYear = 2019, Mileage = 50000,   SellPrice = 1500, ForSell = false, Sold = true }
             };
 
             context.Car.AddRange(cars);
@@ -423,8 +425,8 @@ namespace OCR_05_Express_Voiture_Test.Integration
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-            var car1 = new Car { VinCode = "CAR-TO-KEEP", BrandId = 1, ModelId = 1, ConstructionYear = 2020, Mileage = 10000, RepairAmount = 500 };
-            var car2 = new Car { VinCode = "CAR-TO-DELETE", BrandId = 1, ModelId = 2, ConstructionYear = 2021, Mileage = 5000, RepairAmount = 300 };
+            var car1 = new Car { VinCode = "CAR-TO-KEEP", BrandId = 1, ModelId = 1, ConstructionYear = 2020, Mileage = 10000, SellPrice = 500 };
+            var car2 = new Car { VinCode = "CAR-TO-DELETE", BrandId = 1, ModelId = 2, ConstructionYear = 2021, Mileage = 5000, SellPrice = 300 };
 
             context.Car.AddRange(car1, car2);
             await context.SaveChangesAsync();
@@ -468,7 +470,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
                 Mileage = 1000,
                 ForSell = true,
                 Sold = false,
-                RepairAmount = 250.50,
+                SellPrice = 250.50,
                 ImagePath = "/img/user/test-image.jpg",
                 RepairDescription = "Entretien complet effectué"
             };
@@ -485,7 +487,7 @@ namespace OCR_05_Express_Voiture_Test.Integration
             Assert.Equal("Premium", savedCar.TrimLevel);
             Assert.Equal(2023, savedCar.ConstructionYear);
             Assert.Equal(1000, savedCar.Mileage);
-            Assert.Equal(250.50, savedCar.RepairAmount);
+            Assert.Equal(250.50, savedCar.SellPrice);
             Assert.Equal("/img/user/test-image.jpg", savedCar.ImagePath);
             Assert.Equal("Entretien complet effectué", savedCar.RepairDescription);
             Assert.True(savedCar.ForSell);

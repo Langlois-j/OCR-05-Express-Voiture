@@ -135,9 +135,9 @@
             </div>
             <!-- Prix de vente -->
             <div class="form-group">
-                <label asp-for="RepairAmount" class="control-label">Prix de vente</label>
-                <input asp-for="RepairAmount" class="form-control" type="number" step="0.01" placeholder="Entrez le prix" />
-                <span asp-validation-for="RepairAmount" class="form-validation"></span>
+                <label asp-for="SellPrice" class="control-label">Prix de vente</label>
+                <input asp-for="SellPrice" class="form-control" type="number" step="0.01" placeholder="Entrez le prix" />
+                <span asp-validation-for="SellPrice" class="form-validation"></span>
             </div>
             <!-- État de la voiture -->
             <div class="form-group">
@@ -187,7 +187,7 @@
                                         .val(model.id)
                                         .text(model.name);
 
-                                    // ✅ Pré-sélectionne la valeur si c'est une édition
+                                   
                                     if (model.id == selectedModelId) {
                                         option.attr('selected', 'selected');
                                     }
@@ -211,18 +211,18 @@
                 }
             }
 
-            // ✅ CHARGE LES MODÈLES AU CHARGEMENT DE LA PAGE
+          
             var initialBrandId = $('#BrandId').val();
-            var initialModelId = $('#ModelId').val();  // ✅ Récupère la valeur du ModelId
+            var initialModelId = $('#ModelId').val();  
 
             if (initialBrandId) {
-                loadModels(initialBrandId, initialModelId);  // ✅ Passe le ModelId
+                loadModels(initialBrandId, initialModelId);  
             }
 
             // Quand on change la marque
             $('#BrandId').change(function () {
                 var brandId = $(this).val();
-                loadModels(brandId, null);  // Aucune pré-sélection lors du changement
+                loadModels(brandId, null);  
             });
         });
     </script>

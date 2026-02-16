@@ -19,7 +19,7 @@ namespace OCR_05_Express_Voiture_Test.Unitaire
                 ModelId = 1,
                 ConstructionYear = 2020,
                 Mileage = 50000,
-                RepairAmount = 1500.00
+                SellPrice = 1500.00
             };
 
             // ACT
@@ -35,12 +35,12 @@ namespace OCR_05_Express_Voiture_Test.Unitaire
             // ARRANGE
             var car = new Car
             {
-                VinCode = "", // VIN vide
+                VinCode = "", 
                 BrandId = 1,
                 ModelId = 1,
                 ConstructionYear = 2020,
                 Mileage = 50000,
-                RepairAmount = 1500.00
+                SellPrice = 1500.00
             };
 
             // ACT
@@ -52,8 +52,8 @@ namespace OCR_05_Express_Voiture_Test.Unitaire
         }
 
         [Theory]
-        [InlineData(1989)] // Avant 1990
-        [InlineData(2050)] // Année future
+        [InlineData(1989)] 
+        [InlineData(2050)] 
         public void Car_WithInvalidYear_ShouldFailValidation(int year)
         {
             // ARRANGE
@@ -64,7 +64,7 @@ namespace OCR_05_Express_Voiture_Test.Unitaire
                 ModelId = 1,
                 ConstructionYear = year,
                 Mileage = 50000,
-                RepairAmount = 1500.00
+                SellPrice = 1500.00
             };
 
             // ACT
@@ -72,15 +72,15 @@ namespace OCR_05_Express_Voiture_Test.Unitaire
 
             // ASSERT
             Assert.NotEmpty(validationResults);
-            // Vérifier qu'il y a une erreur de validation (peu importe le membre)
-            Assert.True(validationResults.Any(v =>
+           
+            Assert.Contains(validationResults, v =>
                 v.ErrorMessage != null &&
-                (v.ErrorMessage.Contains("année") || v.ErrorMessage.Contains("1990") || v.ErrorMessage.Contains(DateTime.Now.Year.ToString()))));
+                (v.ErrorMessage.Contains("année") || v.ErrorMessage.Contains("1990") || v.ErrorMessage.Contains(DateTime.Now.Year.ToString())));
         }
 
         [Theory]
-        [InlineData(1990)] // Année minimum valide
-        [InlineData(2024)] // Année actuelle (ou proche)
+        [InlineData(1990)] 
+        [InlineData(2024)] 
         public void Car_WithValidYear_ShouldPassValidation(int year)
         {
             // ARRANGE
@@ -91,7 +91,7 @@ namespace OCR_05_Express_Voiture_Test.Unitaire
                 ModelId = 1,
                 ConstructionYear = year,
                 Mileage = 50000,
-                RepairAmount = 1500.00
+                SellPrice = 1500.00
             };
 
             // ACT
@@ -112,12 +112,12 @@ namespace OCR_05_Express_Voiture_Test.Unitaire
                 ModelId = 1,
                 ConstructionYear = 2020,
                 Mileage = 0,
-                RepairAmount = 0
+                SellPrice = 0
             };
 
             // ASSERT
-            Assert.True(car.ForSell); // Par défaut true
-            Assert.False(car.Sold);   // Par défaut false
+            Assert.True(car.ForSell); 
+            Assert.False(car.Sold);   
         }
 
         [Fact]
@@ -131,7 +131,7 @@ namespace OCR_05_Express_Voiture_Test.Unitaire
                 ModelId = 1,
                 ConstructionYear = 2020,
                 Mileage = 50000,
-                RepairAmount = 1500.00,
+                SellPrice = 1500.00,
                 TrimLevel = null,
                 ImagePath = null,
                 RepairDescription = null

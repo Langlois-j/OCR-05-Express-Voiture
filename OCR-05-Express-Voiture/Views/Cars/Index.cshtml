@@ -6,8 +6,6 @@
     ViewData["Title"] = "Nos voitures";
    
     bool isAdmin = false;
-
-    // Si l'utilisateur est connecté, vérifier s'il est admin
     if (SignInManager.IsSignedIn(User))
     {
         var currentUser = await UserManager.GetUserAsync(User);
@@ -69,7 +67,7 @@
                            
                             <div class="car-info">
                                 <div class="car-price">
-                                    Prix de vente: @car.RepairAmount.ToString("C2")
+                                    Prix de vente: @car.SellPrice.ToString("C2")
                                 </div>
 
                                 <div class="car-details">
