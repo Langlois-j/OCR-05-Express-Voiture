@@ -1,0 +1,56 @@
+﻿@model OCR_05_Express_Voiture.Models.Entities.Car
+
+@{
+    ViewData["Title"] = "Supprimer une voiture";
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container-form" style="margin-top: 50px;">
+        <h1 class="page-title">Supprimer une voiture</h1>
+        <p class="page-subtitle">Êtes-vous sûr de vouloir supprimer ce véhicule ?</p>
+
+        <div style="background: var(--light-gray); padding: 25px; border-radius: 4px; margin: 30px 0; border: 1px solid var(--border-color);">
+            <dl class="row">
+                <dt class="col-sm-3">Code VIN :</dt>
+                <dd class="col-sm-9">@Model.VinCode</dd>
+
+                <dt class="col-sm-3">Marque :</dt>
+                <dd class="col-sm-9">@(Model.Brand?.Name ?? "Non spécifiée")</dd>
+
+                <dt class="col-sm-3">Modèle :</dt>
+                <dd class="col-sm-9">@(Model.Model?.Name ?? "Non spécifié")</dd>
+
+                @if (!string.IsNullOrEmpty(Model.TrimLevel))
+                {
+                    <dt class="col-sm-3">Finition :</dt>
+                    <dd class="col-sm-9">@Model.TrimLevel</dd>
+                }
+
+                <dt class="col-sm-3">Année :</dt>
+                <dd class="col-sm-9">@Model.ConstructionYear</dd>
+
+                <dt class="col-sm-3">Kilométrage :</dt>
+                <dd class="col-sm-9">@Model.Mileage.ToString("N0") km</dd>
+            </dl>
+        </div>
+
+        <form asp-action="Delete" style="text-align: center;">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn-delete" style="padding: 12px 40px; margin-right: 10px;">Supprimer</button>
+            <a asp-action="Index" class="back-link">Annuler</a>
+        </form>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

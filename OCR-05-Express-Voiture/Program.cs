@@ -1,49 +1,64 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OCR_05_Express_Voiture.Data;
+using OCR_05_Express_Voiture.Data.Seeders;  // ✅ Import
 using OCR_05_Express_Voiture.Models.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-// Enregistrement du DbContext (exemple SQL Server)
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
- options.UseSqlServer(connectionString));
+// ✅ User Secrets sont chargés automatiquement en Development
+// Pas besoin de config supplémentaire - ils sont dans IConfiguration
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<ICarBrandRepository, CarBrandRepository>();
 
+// ✅ Enregistrer AdminSeeder
+builder.Services.AddScoped<AdminSeeder>();
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+// Identity avec rôles
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()  // ✅ Important pour les rôles
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-//Seeder
+// ✅ SEEDING AVEC ADMIN
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
         var db = services.GetRequiredService<ApplicationDbContext>();
-        // Applique les migrations et cr�e la base si n�cessaire
+        var logger = services.GetRequiredService<ILogger<Program>>();
+
+        logger.LogInformation("🔄 Application des migrations...");
         db.Database.Migrate();
+
+        // ✅ Seeding admin depuis User Secrets
+        logger.LogInformation("🔐 Seeding du compte admin...");
+        var adminSeeder = services.GetRequiredService<AdminSeeder>();
+        await adminSeeder.SeedAdminAsync();
+
+        logger.LogInformation("✅ Seeding terminé");
     }
     catch (Exception ex)
     {
-        // loggez l'erreur si n�cessaire
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Erreur lors de l'application des migrations");
+        logger.LogError(ex, "❌ Erreur lors du seeding");
     }
 }
 
-
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -51,7 +66,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -59,7 +73,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -68,3 +82,5 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+public partial class Program { }

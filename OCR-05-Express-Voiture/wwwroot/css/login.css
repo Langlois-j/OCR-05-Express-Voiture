@@ -1,0 +1,121 @@
+/* ============================================
+   PAGE DE CONNEXION / LOGIN
+   ============================================ */
+
+.login-wrapper {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-wrapper h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: var(--text-color);
+}
+
+.login-wrapper .form-label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.login-wrapper input[type="email"],
+.login-wrapper input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white !important;
+    color: var(--text-color) !important;
+}
+
+.login-wrapper input[type="email"]:focus,
+.login-wrapper input[type="password"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(139, 115, 85, 0.3);
+}
+
+.login-wrapper .checkbox {
+    margin: 15px 0;
+}
+
+.login-wrapper .checkbox .form-label {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.login-wrapper .checkbox input[type="checkbox"] {
+    margin: 0 8px 0 0;
+}
+
+.login-wrapper button {
+    padding: 12px 20px;
+    margin-top: 10px;
+    margin-right: 10px;
+    background-color: var(--button-generic-background);
+    color: var(--button-generic-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.login-wrapper button:hover {
+    background-color: var(--button-generic-background-hover);
+    color: var(--button-generic-color-hover);
+}
+
+.login-wrapper > div:last-child {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-wrapper > div:last-child span {
+    margin: 0 10px;
+}
+
+/* Responsive pour la page de login */
+@@media (max-width: 480px) {
+    .login-wrapper {
+        max-width: 100%;
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .login-wrapper h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .login-wrapper button {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .login-wrapper > div:last-child {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login-wrapper > div:last-child button {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    .login-wrapper > div:last-child span {
+        margin: 8px 0;
+    }
+}

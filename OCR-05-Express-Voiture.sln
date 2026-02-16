@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36429.23
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11312.210
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCR-05-Express-Voiture", "OCR-05-Express-Voiture\OCR-05-Express-Voiture.csproj", "{C305CF99-AA64-4949-91A2-EBA3B306BD4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCR-05-Express-Voiture-Test", "OCR-05-Express-Voiture-Test\OCR-05-Express-Voiture-Test.csproj", "{F2FCA644-063B-4D50-92DC-C150726D3C90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCR-05-Express-Voiture-Test", "OCR-05-Express-Voiture-Test\OCR-05-Express-Voiture-Test.csproj", "{95F18700-A306-48C1-85DB-BD3C76470AFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{C305CF99-AA64-4949-91A2-EBA3B306BD4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C305CF99-AA64-4949-91A2-EBA3B306BD4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C305CF99-AA64-4949-91A2-EBA3B306BD4A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2FCA644-063B-4D50-92DC-C150726D3C90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2FCA644-063B-4D50-92DC-C150726D3C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2FCA644-063B-4D50-92DC-C150726D3C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2FCA644-063B-4D50-92DC-C150726D3C90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95F18700-A306-48C1-85DB-BD3C76470AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95F18700-A306-48C1-85DB-BD3C76470AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95F18700-A306-48C1-85DB-BD3C76470AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95F18700-A306-48C1-85DB-BD3C76470AFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

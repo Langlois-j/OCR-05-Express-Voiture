@@ -1,0 +1,76 @@
+/* ============================================
+   CARTES
+   ============================================ */
+.card {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Conteneurs */
+.container-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px;
+}
+
+/* Upload d'images */
+.image-upload-wrapper {
+    position: relative;
+    border: 2px dashed var(--border-color);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    background-color: #fafafa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.image-upload-wrapper:hover {
+    border-color: var(--primary-color);
+    background-color: #f5f5f5;
+}
+
+.image-upload-wrapper input[type="file"] {
+    display: none;
+}
+
+.upload-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.upload-button:hover {
+    background-color: #f5f5f5;
+    border-color: var(--primary-color);
+}
+
+.upload-text {
+    color: var(--text-light);
+    font-size: 12px;
+}

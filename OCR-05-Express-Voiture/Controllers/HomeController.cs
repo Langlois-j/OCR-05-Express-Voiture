@@ -1,6 +1,6 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using OCR_05_Express_Voiture.Models;
+using System.Diagnostics;
 
 namespace OCR_05_Express_Voiture.Controllers
 {
@@ -15,7 +15,7 @@ namespace OCR_05_Express_Voiture.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Cars");
         }
 
         public IActionResult Privacy()

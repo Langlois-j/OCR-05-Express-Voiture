@@ -1,22 +1,42 @@
-html {
-  font-size: 14px;
-}
+/* ============================================
+   SITE.CSS - FICHIER PRINCIPAL
+   ============================================
+   
+   Ce fichier importe tous les autres fichiers CSS
+   dans l'ordre correct pour une cascade optimale.
+   
+   ORDRE DES IMPORTS :
+   1. Variables globales
+   2. Styles de base
+   3. Composants (navbar, formulaires, boutons, etc.)
+   4. Composants avancés (grille, cartes, alertes)
+   5. Typographie
+   6. Responsive
+   
+   ============================================ */
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
+/* 1. Variables globales - DOIT être en premier */
+@import url('variables.css');
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
+/* 2. Styles de base */
+@import url('base.css');
 
-html {
-  position: relative;
-  min-height: 100%;
-}
+/* 3. Composants */
+@import url('navbar.css');
+@import url('forms.css');
+@import url('buttons.css');
 
-body {
-  margin-bottom: 60px;
-}
+/* 4. Composants avancés */
+@import url('cars.css');
+@import url('cards.css');
+@import url('alerts.css');
+@import url('tables.css');
+@import url('login.css');
+
+/* 5. Typographie */
+@import url('typography.css');
+/*element visuel*/
+@import url('ruban.css');
+
+/* 6. Responsive - DOIT être en dernier */
+@import url('responsive.css');

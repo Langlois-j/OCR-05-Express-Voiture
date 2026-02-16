@@ -1,19 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
+
 namespace OCR_05_Express_Voiture.Models.Entities
 {
     public partial class CarBrand
     {
-        public CarBrand()
-        {
-        }
+        [Key]
+        public int Id { get; set; }
 
-        public CarBrand(string name) 
-       { 
-           Id= Guid.NewGuid();
-           Name = name;
-       }
-        public Guid Id {get ;set;}
-        public string requi Name { get; set; }
+        public required string Name { get; set; }
 
     }
 }

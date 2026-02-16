@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/OCR-05-Express-Voiture/appsettings.json
+/OCR-05-Express-Voiture/wwwroot/img/user/1771074626622.jpg

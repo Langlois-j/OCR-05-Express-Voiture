@@ -1,0 +1,123 @@
+﻿@model IEnumerable<OCR_05_Express_Voiture.Models.Entities.Car>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "Nos voitures";
+   
+    bool isAdmin = false;
+
+    // Si l'utilisateur est connecté, vérifier s'il est admin
+    if (SignInManager.IsSignedIn(User))
+    {
+        var currentUser = await UserManager.GetUserAsync(User);
+        if (currentUser != null && await UserManager.IsInRoleAsync(currentUser, "Admin"))
+        {
+            isAdmin = true;
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+     
+</head>
+<body>
+  
+    <div class="main-container">
+        <!-- Page Title -->
+        <h1 class="page-title">Nos voitures</h1>
+        @if (SignInManager.IsSignedIn(User))
+        {
+          
+            <div class="button-section">
+                <a href="/cars/create" class="btn-add-car">+ Ajouter une voiture</a>
+            </div>
+        }
+        
+        <!-- Cars Grid -->
+        @if (Model != null && Model.Any())
+        {
+            <div class="cars-grid">
+                @foreach (var car in Model)
+                {
+                    <!-- Afficher la voiture si l'admin la voit, ou si elle est en vente -->
+                    @if (isAdmin || car.ForSell)
+                    {
+                        <div class="car-card">
+                            
+                            <div class="car-image-container">
+                                <img src="@(string.IsNullOrEmpty(car.ImagePath) ? "/img/site/Photo-Non-Dispo.png" : car.ImagePath)"
+                                     alt="@car.Brand?.Name @car.Model?.Name"
+                                     class="car-image" />
+                                @if (car.Sold)
+                                {
+                                    <div class="SellCorner">Vendu</div>
+                                }
+                                @if (isAdmin && !car.ForSell)
+                                {
+                                    <div class="AdminCorner">Historique</div>
+                                }
+                            </div>
+
+                           
+                            <div class="car-info">
+                                <div class="car-price">
+                                    Prix de vente: @car.RepairAmount.ToString("C2")
+                                </div>
+
+                                <div class="car-details">
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Année:</span> @car.ConstructionYear
+                                    </div>
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Marque:</span>  @car.Brand?.Name
+                                    </div>
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Modèle:</span>  @car.Model?.Name
+                                    </div>
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Finition:</span> @(car.TrimLevel ?? "Non spécifiée")
+                                    </div>
+                                    <div class="car-details-item">
+                                        <span class="car-details-label">Kilométrage:</span> @car.Mileage km
+                                    </div>
+                                </div>
+
+                                
+                                <div class="car-actions">
+                                    <a href="/cars/details/@car.Id" class="btn-details">Voir détails</a>
+                                    @if (isAdmin)
+                                    {
+                                        <a href="/cars/edit/@car.Id" class="btn-details" style="background-color: #6c757d;">Modifier</a>
+                                        <a href="/cars/delete/@car.Id" class="btn-delete">Supprimer</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state">
+                <p>Aucune voiture disponible pour le moment.</p>
+                @if (isAdmin)
+                {
+                    <a href="/cars/create" class="btn-add-car">Ajouter la première voiture</a>
+                }
+            </div>
+        }
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
