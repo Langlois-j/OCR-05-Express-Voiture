@@ -50,7 +50,7 @@ namespace OCR_05_Express_Voiture.Controllers
             var brand = await _context.CarBrand.FindAsync(id);
             if (brand != null)
             {
-                // Vérifier s'il y a des modèles associés
+              
                 var hasModels = await _context.CarModel.AnyAsync(m => m.CarBrandId == id);
                 if (hasModels)
                 {

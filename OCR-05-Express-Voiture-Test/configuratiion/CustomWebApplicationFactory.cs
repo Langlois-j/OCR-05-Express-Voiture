@@ -17,7 +17,6 @@ namespace OCR_05_Express_Voiture_Test.configuratiion
         {
             builder.ConfigureServices(services =>
             {
-                // 1. Retirer le DbContext existant (celui qui pointe vers SQL Server)
                 var descriptor = services.SingleOrDefault(
                     d => d.ServiceType == typeof(DbContextOptions<ApplicationDbContext>));
 
@@ -26,21 +25,19 @@ namespace OCR_05_Express_Voiture_Test.configuratiion
                     services.Remove(descriptor);
                 }
 
-                // 2. Ajouter un DbContext InMemory pour les tests
-                // InMemory = base de données temporaire en mémoire RAM
+                // ✅ Base de données UNIQUE par instance
+                var databaseName = $"TestDatabase_{Guid.NewGuid()}";
+
                 services.AddDbContext<ApplicationDbContext>(options =>
                 {
-                    options.UseInMemoryDatabase("TestDatabase");
+                    options.UseInMemoryDatabase(databaseName);
                 });
 
-                // 3. Créer la base de données et la remplir avec des données de test
                 var serviceProvider = services.BuildServiceProvider();
                 using (var scope = serviceProvider.CreateScope())
                 {
                     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                    db.Database.EnsureCreated(); // Créer la structure
-
-                    // Remplir avec des données de test
+                    db.Database.EnsureCreated();
                     SeedTestData(db);
                 }
             });
@@ -49,32 +46,31 @@ namespace OCR_05_Express_Voiture_Test.configuratiion
         /// <summary>
         /// Remplir la base de données avec des données de test
         /// </summary>
-        private void SeedTestData(ApplicationDbContext context)
+        public static void SeedTestData(ApplicationDbContext context)
         {
-            // Nettoyer d'abord (au cas où)
-            context.Car.RemoveRange(context.Car);
-            context.CarModel.RemoveRange(context.CarModel);
-            context.CarBrand.RemoveRange(context.CarBrand);
-            context.SaveChanges();
 
-            // Ajouter des marques de test
             var brands = new[]
             {
-                new CarBrand { Id = 1, Name = "C1" },
-                new CarBrand { Id = 2, Name = "C2" },
-                new CarBrand { Id = 3, Name = "C3" }
+                new CarBrand { Name = "C1" },  
+                new CarBrand { Name = "C2" }, 
+                new CarBrand { Name = "C3" }  
             };
             context.CarBrand.AddRange(brands);
             context.SaveChanges();
 
-            // Ajouter des modèles de test
+            
+            var brand1 = context.CarBrand.First(b => b.Name == "C1");
+            var brand2 = context.CarBrand.First(b => b.Name == "C2");
+            var brand3 = context.CarBrand.First(b => b.Name == "C3");
+
+           
             var models = new[]
             {
-                new CarModel { Id = 1, Name = "C1M1", CarBrandId = 1 },
-                new CarModel { Id = 2, Name = "C1M2", CarBrandId = 1 },
-                new CarModel { Id = 3, Name = "C2M1", CarBrandId = 2 },
-                new CarModel { Id = 4, Name = "C2M2", CarBrandId = 2 },
-                new CarModel { Id = 5, Name = "C3M1", CarBrandId = 3 }
+                new CarModel { Name = "C1M1", CarBrandId = brand1.Id },
+                new CarModel { Name = "C1M2", CarBrandId = brand1.Id },
+                new CarModel { Name = "C2M1", CarBrandId = brand2.Id },
+                new CarModel { Name = "C2M2", CarBrandId = brand2.Id },
+                new CarModel { Name = "C3M1", CarBrandId = brand3.Id }
             };
             context.CarModel.AddRange(models);
             context.SaveChanges();

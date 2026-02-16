@@ -4,7 +4,7 @@
 @{
 
     bool isAdmin = false;
-    // Si l'utilisateur est connecté, vérifier s'il est admintryrt
+    
     if (SignInManager.IsSignedIn(User))
     {
         var currentUser = await UserManager.GetUserAsync(User);
