@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OCR_05_Express_Voiture.Models;
 using System.Diagnostics;
 
 namespace OCR_05_Express_Voiture.Controllers
 {
-    public class HomeController : Controller
+       public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 

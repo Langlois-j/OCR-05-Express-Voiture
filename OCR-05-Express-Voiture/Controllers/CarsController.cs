@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using OCR_05_Express_Voiture.Models.Entities;
 
 namespace OCR_05_Express_Voiture.Controllers
 {
+ 
     public class CarsController(ApplicationDbContext context) : Controller
     {
         private readonly ApplicationDbContext _context = context;
@@ -38,6 +40,7 @@ namespace OCR_05_Express_Voiture.Controllers
         }
 
         // GET: Cars/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             var car = new Car();
@@ -47,6 +50,7 @@ namespace OCR_05_Express_Voiture.Controllers
         }
 
         // POST: Cars/Create
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,VinCode,BrandId,ModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath,RepairDescription")] Car car, IFormFile? imageFile)
@@ -131,6 +135,7 @@ namespace OCR_05_Express_Voiture.Controllers
         }
 
         // GET: Cars/Edit/X
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -149,6 +154,7 @@ namespace OCR_05_Express_Voiture.Controllers
         }
 
         // POST: Cars/Edit/X
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,VinCode,BrandId,ModelId,TrimLevel,ConstructionYear,Mileage,ForSell,Sold,RepairAmount,ImagePath,RepairDescription")] Car car, IFormFile? imageFile)
@@ -257,6 +263,7 @@ namespace OCR_05_Express_Voiture.Controllers
         }
 
         // GET: Cars/Delete/X
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -277,6 +284,7 @@ namespace OCR_05_Express_Voiture.Controllers
         }
 
         // POST: Cars/Delete/X
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
